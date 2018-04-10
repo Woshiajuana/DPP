@@ -1,8 +1,8 @@
 /**
  * 命令日志
  * */
-let config = require( '../../config/config.default');
-module.exports = (log_str, stage) => {
+import config       from '../../config/config.default'
+export default (log_str, stage) => {
     if (!config.is_log) return;
     switch (stage) {
         case '000':

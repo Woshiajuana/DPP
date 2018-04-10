@@ -25,5 +25,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen( config.PORT, () => {
+    log('444');
     log(`服务已经启动，监听端口：${config.PORT}`);
 });

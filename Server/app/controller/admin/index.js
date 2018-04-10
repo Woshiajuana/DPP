@@ -1,5 +1,7 @@
 
 import module       from '../../model/admin'
+import check        from '../../utils/check'
+import cue_config   from '../../../config/config.cue'
 
 class Admin {
     async login (req, res, next) {
@@ -7,7 +9,8 @@ class Admin {
             user_name: req.body.user_name,
             user_password: req.body.user_password
         };
-        if(!check(res, cue_config, params)) return;
+        console.log(2222222222)
+        if(!check(res, params)) return;
         module.find(params, function(err, doc){
             if(!doc.length) return res.json(cue_config.ERROR('帐号或密码不正确'));
             /**创建token*/

@@ -1,3 +1,4 @@
 export default {
-    PORT: '8088'
+    PORT: '9999',
+    DB_URL: 'mongodb://localhost/ittn'
 }
