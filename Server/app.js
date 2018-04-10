@@ -1,8 +1,9 @@
 
-import config       from './config/env_config'
-import router       from './router/index'
-import bodyParser   from 'body-parser';
-import express      from 'express';
+import config       from './config/config.test'
+import router       from './app/router'
+import bodyParser   from 'body-parser'
+import express      from 'express'
+import log          from './tool/log'
 
 const app = express();
 
@@ -24,5 +25,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen( config.PORT, () => {
-    console.log('success listen…………');
+    log(`服务已经启动，监听端口：${config.PORT}`);
 });
