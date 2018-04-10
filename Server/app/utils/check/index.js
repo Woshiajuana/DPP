@@ -4,7 +4,6 @@ export default ( res, params ) => {
     for (var key in params) {
         if (typeof params[key] === 'undefined') {
             type = false;
-            console.log('xxxxx')
             res.json(cue_config.LACK_NECESSARY_PARAM(key))
         }
     }
