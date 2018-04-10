@@ -2,5 +2,8 @@
 import admin from './admin'
 
 export default app => {
-    app.use('v1/admin', admin);
+    app.get('/', (req, res, next) => {
+        res.send('成功');
+    });
+    app.use('/v1/admin', admin);
 }
