@@ -19,7 +19,6 @@ class ParamsFilter {
             format[item] = undefined;
         });
         let params = Object.assign(format, req.query);
-        console.log('进入',params);
         if(!check(res, params)) return;
         req.params = params;
         next();
