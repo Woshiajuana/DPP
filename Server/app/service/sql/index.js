@@ -11,6 +11,18 @@ class Sql {
     }
 
     /**
+     * 添加数据
+     * @param   {Object}    params  参数
+     * */
+    async create (params) {
+        return new Promise((resolve, reject) => {
+            this.module.create(params, (err, doc) => {
+                err ? reject({code: '0001', msg: err}) : resolve({code: '0000', data: doc});
+            })
+        });
+    }
+
+    /**
      * 查找数据
      * @param   {Object}    params  参数
      * */

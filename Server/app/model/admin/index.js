@@ -7,7 +7,7 @@ const schema = new Schema({
     user_name: { type: String, unique: true },
     user_password: String,
     user_date: Date,
-    privilege_level: Number,
+    user_level: Number,
 },{
     versionKey: false,
 });
