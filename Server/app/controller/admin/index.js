@@ -10,7 +10,7 @@ const sql = new Sql(module);
 class Admin {
 
     constructor() {
-
+        this.LIST_LEVE = 5;
     }
 
     /**
@@ -50,7 +50,13 @@ class Admin {
      * */
     async list (req, res, next) {
         let { user, params } = req;
-
+        if (user.user_level >= this.LIST_LEVE) return res.json(cue_config.ERROR('权限不足'));
+        const { code, data, msg } = await sql.paging(params.page_index, params.page_size);
+        if (code !== '0000') {
+            log(msg);
+            return res.json(cue_config.ERROR());
+        }
+        res.json(cue_config.SUCCESS(data));
     }
 
 }
