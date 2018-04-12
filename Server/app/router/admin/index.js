@@ -14,7 +14,7 @@ router.get('/create', checkApiToken, (req, res, next) => {
     next(['user_name', 'user_password', 'user_level']);
 }, paramsFilter.get, Admin.create);
 
-router.get('/create', checkApiToken, (req, res, next) => {
+router.get('/list', checkApiToken, (req, res, next) => {
     next(['page_index', 'page_size']);
 }, paramsFilter.get, Admin.list);
 
