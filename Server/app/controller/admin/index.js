@@ -31,7 +31,7 @@ class Admin {
     }
 
     /**
-     * 创建管理员
+     * 创建数据
      * */
     async create (req, res, next) {
         let { user, params } = req;
@@ -46,7 +46,7 @@ class Admin {
     }
 
     /**
-     * 管理员列表
+     * 列表
      * */
     async list (req, res, next) {
         let { user, params } = req;
@@ -57,6 +57,55 @@ class Admin {
             return res.json(cue_config.ERROR());
         }
         res.json(cue_config.SUCCESS(data));
+    }
+
+    /**
+     * 删除数据
+     * */
+    async remove (req, res, next) {
+        let { user, params } = req;
+        const { code, data, msg } = await sql.find(params);
+        if (code !== '0000') {
+            log(msg);
+            return res.json(cue_config.ERROR());
+        }
+        if (!data.length) {
+            return res.json(cue_config.ERROR('删除失败，不存在该用户'));
+        }
+        const remove_user = data[0];
+        if (user.user_level >= remove_user.user_level) return res.json(cue_config.ERROR('权限不足'));
+        const result = await sql.remove(params);
+        if (result.code !== '0000') {
+            log(result.msg);
+            return res.json(cue_config.ERROR());
+        }
+        res.json(cue_config.SUCCESS());
+    }
+
+    /**
+     * 修改数据
+     * */
+    async update (req, res, next) {
+        let { user, params } = req;
+        const { code, data, msg } = await sql.find({_id: params._id});
+        if (code !== '0000') {
+            log(msg);
+            return res.json(cue_config.ERROR());
+        }
+        if (!data.length) {
+            return res.json(cue_config.ERROR('修改失败，不存在该用户'));
+        }
+        const update_user = data[0];
+        if (user.user_level >= update_user.user_level
+            || user.user_level >= params.user_level)
+            return res.json(cue_config.ERROR('权限不足'));
+        delete params._id;
+        const result = await sql.update({_id: params._id}, params);
+        if (result.code !== '0000') {
+            log(result.msg);
+            return res.json(cue_config.ERROR());
+        }
+        res.json(cue_config.SUCCESS());
     }
 
 }

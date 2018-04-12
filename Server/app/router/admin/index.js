@@ -18,4 +18,12 @@ router.get('/list', checkApiToken, (req, res, next) => {
     next(['page_index', 'page_size']);
 }, paramsFilter.get, Admin.list);
 
+router.get('/remove', checkApiToken, (req, res, next) => {
+    next(['_id']);
+}, paramsFilter.get, Admin.remove);
+
+router.get('/update', checkApiToken, (req, res, next) => {
+    next(['_id']);
+}, paramsFilter.get, Admin.update);
+
 export default router;
