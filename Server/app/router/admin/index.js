@@ -1,29 +1,29 @@
 
 import express          from 'express'
 import Admin            from '../../controller/admin'
-import paramsFilter     from '../../middleware/params_filter'
-import checkApiToken    from '../../middleware/check_api_token'
+import paramsParser     from '../../middleware/params-parser'
+import tokenParser      from '../../middleware/token-parser'
 
 const router = express.Router();
 
 router.get('/login', (req, res, next) => {
     next(['user_name', 'user_password']);
-}, paramsFilter.get, Admin.login);
+}, paramsParser.get, Admin.login);
 
-router.get('/create', checkApiToken, (req, res, next) => {
+router.get('/create', tokenParser, (req, res, next) => {
     next(['user_name', 'user_password', 'user_level']);
-}, paramsFilter.get, Admin.create);
+}, paramsParser.get, Admin.create);
 
-router.get('/list', checkApiToken, (req, res, next) => {
+router.get('/list', tokenParser, (req, res, next) => {
     next(['page_index', 'page_size']);
-}, paramsFilter.get, Admin.list);
+}, paramsParser.get, Admin.list);
 
-router.get('/remove', checkApiToken, (req, res, next) => {
+router.get('/remove', tokenParser, (req, res, next) => {
     next(['_id']);
-}, paramsFilter.get, Admin.remove);
+}, paramsParser.get, Admin.remove);
 
-router.get('/update', checkApiToken, (req, res, next) => {
+router.get('/update', tokenParser, (req, res, next) => {
     next(['_id']);
-}, paramsFilter.get, Admin.update);
+}, paramsParser.get, Admin.update);
 
 export default router;
