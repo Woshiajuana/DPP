@@ -11,17 +11,7 @@ export const doUserRegister = data => curl('index.php?r=v1/register', data);
 export const doSmsSend = data => curl('index.php?r=v1/verifycode', data);
 
 // 4.上传照片接口
-export const doPhotographSubmit = data => {
-    const formData = new FormData();
-    Object.keys(data).forEach(key => {
-        formData.append(key, data[key]);
-    });
-    return curl(`index.php?r=v1/upload`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data;charset=UTF-8'
-        },
-    });
-};
+export const doPhotographSubmit = data => curl(`index.php?r=v1/upload`, data);
 
 // 5. 我的照⽚片列列表接⼝口
 export const reqPictureList = data => curl('index.php?r=v1/piclist', data, { loading: false });
@@ -33,7 +23,11 @@ export const doLuckDrawSubmit = () => curl('index.php?r=v1/lottery');
 export const doReceivingSubmit = data => curl('index.php?r=v1/addprofile', data);
 
 // 8. 奖品列列表
-export const reqLuckDrawList = () => curl('index.php?r=v1/awardlist', {}, { loading: false });
+export const reqLuckDrawInfo = () => curl('index.php?r=v1/awardlist', {}, { loading: false });
 
 // 9. 排名接⼝口
 export const reqRankingList = () => curl('index.php?r=v1/ranklist', {}, { loading: false });
+
+
+// 10 我的战绩
+export const reqStandingsList = () => curl('index.php?r=v1/myaward', {}, { loading: false });

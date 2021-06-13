@@ -55,12 +55,12 @@ const router = new Router({
         {
             path: '/standings',
             component: () => import('src/views/standings'),
-            meta: { status: 7, title: '我的战绩' },
+            meta: { status: 2, title: '我的战绩' },
         },
         {
             path: '/picture',
             component: () => import('src/views/picture'),
-            meta: { status: 8, title: '我的照片' },
+            meta: { status: 2, title: '我的照片' },
         },
     ]
 });

@@ -6,6 +6,9 @@ export default {
             rotate: 0,
             duration: 0,
             flag: false,
+            score: 0,
+            objGift: '',
+            objUser: '',
         }
     }
 }

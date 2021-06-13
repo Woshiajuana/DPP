@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div class="view-inner">
+        <super-box
+            @refresh="reqDataList"
+            :data="superBox$"
+            class="view-inner">
             <div class="null-1"></div>
             <div class="c-card">
                 <i class="title"></i>
@@ -11,48 +14,47 @@
                             <span>获得时间</span>
                             <span>状态</span>
                         </li>
-                        <li>
-                            <span>20元话费</span>
-                            <span>2021-05-07</span>
-                            <span>已领取</span>
-                        </li>
-                        <li>
-                            <span>20元话费</span>
-                            <span>2021-05-07</span>
-                            <span>
-                                <i class="btn">点击领取</i>
+                        <li v-for="(item, index) in arrData" :key="index">
+                            <span>{{item.name}}</span>
+                            <span>{{item.date}}</span>
+                            <span v-if="item.state === 1">已领取</span>
+                            <span v-else-if="item.state === 0">
+                                <i class="btn" @click="$router.push({ path: '/receiving', query: item })">点击领取</i>
                             </span>
-                        </li>
-                        <li>
-                            <span>20元话费</span>
-                            <span>2021-05-07</span>
-                            <span>
-                                <i class="btn">点击领取</i>
-                            </span>
-                        </li>
-                        <li>
-                            <span>20元话费</span>
-                            <span>2021-05-07</span>
-                            <span>
-                                <i class="btn">点击领取</i>
-                            </span>
-                        </li>
-                        <li>
-                            <span>20元话费</span>
-                            <span>2021-05-07</span>
-                            <span>
-                                <i class="btn">点击领取</i>
-                            </span>
+                            <span v-else></span>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </super-box>
     </div>
 </template>
 
 <script>
+    import SuperBoxMixin from 'src/mixins/super-box.mixin'
     export default {
+        mixins: [
+            SuperBoxMixin,
+        ],
+        data () {
+            return {
+                arrData: '',
+            }
+        },
+        created() {
+            this.reqDataList();
+        },
+        methods: {
+            reqDataList () {
+                this.superBoxLoading();
+                this.$api.reqStandingsList().then(res => {
+                    this.arrData = res;
+                    this.arrData.length
+                        ? this.superBoxSuccess()
+                        : this.superBoxEmpty();
+                }).toast(this.superBoxError.bind(this));
+            }
+        },
     }
 </script>
 

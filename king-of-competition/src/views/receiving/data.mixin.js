@@ -3,16 +3,16 @@ export default {
     data () {
         return {
             isPopup: false,
-            IsPrivacy: false,
+            isPrivacy: false,
             objInput: {
-                UserName: {
+                name: {
                     value: '',
                     placeholder: '姓名',
                     use: [
                         { nonempty: true, prompt: '请填写姓名', },
                     ],
                 },
-                Mobile: {
+                mobile: {
                     value: '',
                     type: 'tel',
                     maxlength: 11,
@@ -21,36 +21,36 @@ export default {
                         { nonempty: true, prompt: '请填写手机号', },
                     ],
                 },
-                Province: {
+                province: {
                     value: '',
                     classes: 'form-cell-half',
                     placeholder: '省份',
                     is: false,
                     keyword: '',
-                    options: [],
+                    // options: [],
                     use: [
                         { nonempty: true, prompt: '请选择省份', },
                     ],
                 },
-                City: {
+                city: {
                     value: '',
                     classes: 'form-cell-half',
                     placeholder: '城市',
                     is: false,
                     keyword: '',
-                    options: [],
+                    // options: [],
                     use: [
                         { nonempty: true, prompt: '请选择城市', },
                     ],
                 },
-                Address: {
+                addr: {
                     value: '',
                     placeholder: '地址',
                     use: [
                         { nonempty: true, prompt: '请填写详细地址', },
                     ],
                 },
-                Code: {
+                code: {
                     value: '',
                     classes: 'form-cell-half',
                     type: 'tel',

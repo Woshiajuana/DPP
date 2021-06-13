@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div class="view-inner">
+        <super-box
+            @refresh="reqLuckDrawInfo"
+            :data="superBox$"
+            class="view-inner">
             <div class="null-1"></div>
             <i class="title"></i>
             <div class="turntable-wrap">
@@ -9,34 +12,40 @@
                         transform: 'rotate(-' + rotate + 'deg)',
                         transition: 'transform ' + duration + 's ease',
                      }">
-                    <li v-for="(item, index) in 6" :key="index">
-                        <img src="~src/assets/images/gift-smiling-face.png">
-                        <span>感谢参与</span>
+                    <li v-for="(item, index) in arrGift" :key="index">
+                        <img :src="item.pic">
+                        <span>{{item.name}}</span>
                     </li>
                 </ul>
             </div>
             <p class="tips">
-                您还剩<strong>500</strong>滴“嘉油”
+                您还剩<strong> {{objUser.scoreLeft || 0}} </strong>滴“嘉油”
                 <br/>
-                每次抽奖消耗<strong>10</strong>滴“嘉油”
+                每次抽奖消耗<strong> {{score}} </strong>滴“嘉油”
             </p>
-            <div class="c-button c-button-2">
+            <div class="c-button c-button-2" @click="handleLuckDraw">
                 <span>马上抽奖</span>
             </div>
-        </div>
-        <div class="popup-wrap" v-if="false">
+        </super-box>
+        <div class="popup-wrap" v-if="objGift">
             <div class="c-card popup-inner">
                 <div class="c-card-content">
                     <div class="popup-content">
-                        <img src="~src/assets/images/popup-gift-1.png">
-                        <p>你我皆王者!<br/>重在参与</p>
-                        <div class="popup-btn">
+                        <template v-if="objGift.id">
+                            <img :src="objGift.pic">
+                            <p>恭喜您!<br/>{{objGift.name}}</p>
+                        </template>
+                        <template v-else>
+                            <img src="~src/assets/images/popup-gift-1.png">
+                            <p>你我皆王者!<br/>重在参与</p>
+                        </template>
+                        <div class="popup-btn" @click="handleLuckDraw">
                             <span>再抽一次</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <i class="popup-close"></i>
+            <i class="popup-close" @click="objGift = ''"></i>
         </div>
     </div>
 </template>
@@ -50,6 +59,69 @@
             DataMixin,
             SuperBoxMixin,
         ],
+        created () {
+            this.reqLuckDrawInfo();
+            this.reqUserInfo();
+        },
+        methods: {
+            reqUserInfo () {
+                this.$api.reqUserInfo().then(res => {
+                    this.objUser = res;
+                }).toast();
+            },
+            reqLuckDrawInfo () {
+                this.superBoxLoading();
+                this.$api.reqLuckDrawInfo().then(res => {
+                    let { list, score }  = res;
+                    this.score = score;
+                    list = list.filter(item => !!item);
+                    if (list.length > 6) list.length = 6;
+                    const diff = [];
+                    for (let i = 0, len = 6 - list.length; i < len; i++) {
+                        diff.push({ id: 'xxcy1', name: '谢谢参与', pic: require('src/assets/images/gift-smiling-face.png'), isNotGift: true });
+                    }
+                    let source = [], i = 0;
+                    while (source.length < 6 && i < 6) {
+                        if (list[i]) source.push(list[i]);
+                        if (diff[i]) source.push(diff[i]);
+                        i++;
+                    }
+                    source.forEach((item, index) => {
+                        item.min = 60 * index - 60 / 2 + 5;
+                        item.max = 60 * (index + 1) - 60 / 2 - 5;
+                    });
+                    this.arrGift = source;
+                    this.superBoxSuccess();
+                }).toast(this.superBoxError.bind(this));
+            },
+            handleLuckDraw () {
+                this.objGift = '';
+                if (this.rotate > 360) return null;
+                this.$api.doLuckDrawSubmit().then(res => {
+                    let { id } = res || {};
+                    if (!id) {
+                        // 没有中奖
+                        const noGifts = this.arrGift.filter(res => res.isNotGift);
+                        id = noGifts[Math.floor(Math.random() * noGifts.length)].id;
+                    }
+                    const { min, max, name } = this.arrGift.find(item => item.id === id) || {};
+                    if (!name) {
+                        throw '活动太火爆了，请稍后再试';
+                    }
+                    const r = Math.floor(Math.random() * (max - min)) + min;
+                    this.duration = 5;
+                    this.rotate = 360 * 10 + r;
+                    this.reqUserInfo();
+                    setTimeout(() => {
+                        this.duration = 0;
+                        this.rotate = r;
+                        setTimeout(() => {
+                            this.objGift = res || {};
+                        }, 500);
+                    }, this.duration * 1000 + 100);
+                }).toast();
+            },
+        },
     }
 </script>
 
@@ -132,6 +204,7 @@
         span{
             @extend %tac;
             @extend %twno;
+            margin-top: j(10);
             width: f(150);
         }
     }
@@ -142,6 +215,7 @@
         margin: j(20) 0;
         strong{
             @extend %cfff;
+            font-size: j(32);
         }
     }
     .popup-wrap{

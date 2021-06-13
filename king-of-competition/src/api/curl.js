@@ -68,11 +68,9 @@ const curl = (url, data = {}, options = {}) => {
     }, options);
     let { $vux, $user } = Vue.prototype;
     if (loading && $vux) $vux.loading.show();
-    let { token, SAUserActiveId } = $user.get();
+    let { token = '123456' } = $user.get();
     if (useToken && token) {
-        options.headers = { AccessToken: token };
-        data.AccessToken = token;
-        if (SAUserActiveId) data.SAUserActiveId = SAUserActiveId;
+        data instanceof FormData ? data.append('token', token) : (data.token = token);
     }
     options[method === 'get' ? 'params' : 'data'] = data;
     delete options.loading;

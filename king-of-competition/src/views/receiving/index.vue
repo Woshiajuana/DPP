@@ -10,8 +10,8 @@
             ></form-view>
             <p class="c-tips">*输入有效信息，我们将问您发放奖品</p>
             <div class="agreement"
-                 @click="IsPrivacy = !IsPrivacy"
-                 :class="[IsPrivacy && 'active']">
+                 @click="isPrivacy = !isPrivacy"
+                 :class="[isPrivacy && 'active']">
                 <i></i>
                 <span>阅读并勾选</span>
                 <strong @click.stop="isPopup = true">《用户知情同意书》</strong>
@@ -60,42 +60,14 @@
         },
         methods: {
             handleSelect (item, key) {
-                if (item.options.length) {
-                    return item.is = true;
-                }
-                if (key === 'Province') {
-                    this.$api.reqProvinceList().then(res => {
-                        item.options = res.map(item => {
-                            let { ProvinceName: value } = item;
-                            return { ...item, value, name: value };
-                        });
-                        item.is = true;
-                    }).toast();
-                    return null;
-                }
-                if (key === 'City') {
-                    if (this.$validate.check({ x: this.objInput.Province })) {
-                        return null;
-                    }
-                    let { Province } = this.$validate.input(this.objInput);
-                    this.$api.reqCityList({
-                        ProvinceId: Province.ProvinceId,
-                    }).then(res => {
-                        item.options = res.map(item => {
-                            let { CityName: value } = item;
-                            return { ...item, value, name: value };
-                        });
-                        item.is = true;
-                    }).toast();
-                    return null;
-                }
+
             },
             handleSmsSend (cb) {
-                if (this.$validate.check({x: this.objInput.Mobile})) {
+                if (this.$validate.check({x: this.objInput.mobile})) {
                     return null;
                 }
-                const { Mobile } = this.$validate.input(this.objInput);
-                this.$api.doSmsSend({ Mobile }).then(() => {
+                const { mobile } = this.$validate.input(this.objInput);
+                this.$api.doSmsSend({ mobile }).then(() => {
                     cb();
                     this.$vux.toast.show('发送验证码成功');
                 }).toast()
@@ -104,17 +76,17 @@
                 if (this.$validate.check(this.objInput)) {
                     return null;
                 }
-                if (!this.IsPrivacy) {
+                if (!this.isPrivacy) {
                     return this.$vux.toast.show('请先阅读并勾选用户知情同意书');
                 }
-                const { Province, City, ...options } = this.$validate.input(this.objInput);
+                const options = this.$validate.input(this.objInput);
+                const { id } = this.$route.query;
                 this.$api.doReceivingSubmit({
                     ...options,
-                    City: City.value,
-                    Province: Province.value,
+                    id,
                 }).then(() => {
-                    const { GiftType } = this.$route.query;
-                    this.$router.replace({ path: '/status', query: { type: GiftType+'' } });
+                    this.$vux.toast.show('提交成功');
+                    this.$router.go(-1);
                 }).toast()
             },
         },
