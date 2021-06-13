@@ -1,29 +1,55 @@
 <template>
     <div>
-        <div class="view-inner">
+        <super-box
+            @refresh="reqDataList"
+            :data="superBox$"
+            class="view-inner">
             <div class="null-1"></div>
             <div class="c-card">
                 <div class="c-card-content">
                     <ul>
-                        <li v-for="(item, index) in 10" :key="index">
+                        <li v-for="(item, index) in arrData" :key="index">
                             <div class="image">
-                                <img src="" alt=""/>
+                                <img :src="item.url" />
                             </div>
                             <div class="info">
-                                <p>上传日期：2020-05-01</p>
-                                <p>状态：<span>待审核</span></p>
-                                <p>获得"嘉油"：<span>0滴</span></p>
+                                <p>上传日期：{{item.date}}</p>
+                                <p>状态：<strong :class="['status-' + item.status]">{{$config.PICTURE_STATUS.labelByValue[item.status]}}</strong></p>
+                                <p>获得"嘉油"：<strong>{{item.score}}滴</strong></p>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </super-box>
     </div>
 </template>
 
 <script>
+    import SuperBoxMixin from 'src/mixins/super-box.mixin'
     export default {
+        mixins: [
+            SuperBoxMixin,
+        ],
+        data () {
+            return {
+                arrData: '',
+            }
+        },
+        created() {
+            this.reqDataList();
+        },
+        methods: {
+            reqDataList () {
+                this.superBoxLoading();
+                this.$api.reqPictureList().then(res => {
+                    this.arrData = res;
+                    this.arrData.length
+                        ? this.superBoxSuccess()
+                        : this.superBoxEmpty();
+                }).toast(this.superBoxError.bind(this));
+            }
+        },
     }
 </script>
 
@@ -74,10 +100,20 @@
             @extend %db;
             @extend %w100;
             @extend %h100;
+            object-fit: contain;
         }
     }
     .info{
         @extend %df1;
         line-height: 1.6;
+    }
+    .status-0{
+        color: #ffb642;
+    }
+    .status-1{
+        color: #15ab1a;
+    }
+    .status-2{
+        color: #ee0000;
     }
 </style>

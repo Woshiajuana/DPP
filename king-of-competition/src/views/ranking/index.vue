@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div class="view-inner">
+        <super-box
+            @refresh="reqDataList"
+            :data="superBox$"
+            class="view-inner">
             <div class="null-1"></div>
             <div class="c-card">
                 <dt class="title">
@@ -8,22 +11,45 @@
                 </dt>
                 <div class="c-card-content">
                     <ul>
-                        <li v-for="(item, index) in 10" :key="index">
-                            <i>{{index}}</i>
-                            <span>李某某</span>
-                            <span>途虎</span>
-                            <span>上海门店1</span>
-                            <span>1200滴</span>
+                        <li v-for="(item, index) in arrData" :key="index">
+                            <i>{{item.rank}}</i>
+                            <span>{{item.name}}</span>
+                            <span>{{item.brand}}</span>
+                            <span>{{item.store}}</span>
+                            <span>{{item.score || 0}}滴</span>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
+        </super-box>
     </div>
 </template>
 
 <script>
+    import SuperBoxMixin from 'src/mixins/super-box.mixin'
     export default {
+        mixins: [
+            SuperBoxMixin,
+        ],
+        data () {
+            return {
+                arrData: '',
+            }
+        },
+        created() {
+            this.reqDataList();
+        },
+        methods: {
+            reqDataList () {
+                this.superBoxLoading();
+                this.$api.reqRankingList().then(res => {
+                    this.arrData = res;
+                    this.arrData.length
+                        ? this.superBoxSuccess()
+                        : this.superBoxEmpty();
+                }).toast(this.superBoxError.bind(this));
+            }
+        },
     }
 </script>
 
@@ -42,6 +68,7 @@
         color: #b2e5ff;
         ul{
             margin-top: j(-80);
+            min-height: j(600);
         }
         li{
             @extend %df;
@@ -56,10 +83,13 @@
             }
             span{
                 @extend %df1;
+                @extend %twno;
+                margin-right: j(3);
                 &:last-child{
                     @extend %tar;
                     @extend %fwb;
                     @extend %cfff;
+                    margin-right: 0;
                 }
             }
             &:after{

@@ -2,7 +2,7 @@
 import curl, { baseURL } from 'src/api/curl'
 
 // 1.查询个人信息
-export const reqUserInfo = () => curl('index.php?r=v1/userinfo');
+export const reqUserInfo = () => curl('index.php?r=v1/userinfo', {}, { loading: false });
 
 // 2.注册接口
 export const doUserRegister = data => curl('index.php?r=v1/register', data);
@@ -24,7 +24,7 @@ export const doPhotographSubmit = data => {
 };
 
 // 5. 我的照⽚片列列表接⼝口
-export const reqPictureList = data => curl('index.php?r=v1/piclist', data);
+export const reqPictureList = data => curl('index.php?r=v1/piclist', data, { loading: false });
 
 // 6. 抽奖接⼝口
 export const doLuckDrawSubmit = () => curl('index.php?r=v1/lottery');
@@ -33,7 +33,7 @@ export const doLuckDrawSubmit = () => curl('index.php?r=v1/lottery');
 export const doReceivingSubmit = data => curl('index.php?r=v1/addprofile', data);
 
 // 8. 奖品列列表
-export const reqLuckDrawList = () => curl('index.php?r=v1/awardlist');
+export const reqLuckDrawList = () => curl('index.php?r=v1/awardlist', {}, { loading: false });
 
 // 9. 排名接⼝口
-export const reqRankingInfo = () => curl('index.php?r=v1/ranklist');
+export const reqRankingList = () => curl('index.php?r=v1/ranklist', {}, { loading: false });

@@ -6,7 +6,7 @@ import router from 'src/router'
 export const baseURL =
     window.location.host.indexOf('192') > -1
     || window.location.host.indexOf('localhost') > -1
-        ? 'http://47.118.57.150/'
+        ? 'http://localhost:9003/'
         : 'http://47.118.57.150/';
 
 const instance = axios.create({

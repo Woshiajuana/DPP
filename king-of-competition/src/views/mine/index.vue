@@ -1,14 +1,17 @@
 <template>
     <div>
-        <div class="view-inner">
+        <super-box
+            @refresh="reqUserInfo"
+            :data="superBox$"
+            class="view-inner">
             <div class="null-1"></div>
             <div class="c-card user-section">
                 <div class="c-card-content"></div>
                 <div class="user-content">
-                    <img src="" class="user-avatar"/>
+                    <img :src="objData.head" class="user-avatar"/>
                     <div class="user-info">
-                        <p>王某某</p>
-                        <p>13112345678</p>
+                        <p>{{objData.name}}</p>
+                        <p>{{objData.mobile}}</p>
                     </div>
                 </div>
             </div>
@@ -17,19 +20,19 @@
                     <ul class="statistics-content">
                         <li class="statistics-item">
                             <span class="statistics-label">本月拍照获得"嘉油"</span>
-                            <span class="statistics-value">100滴</span>
+                            <span class="statistics-value">{{objData.scorePic}}滴</span>
                         </li>
                         <li class="statistics-item">
-                            <span class="statistics-label">本月拍照获得"嘉油"</span>
-                            <span class="statistics-value">100滴</span>
+                            <span class="statistics-label">王者"嘉油"</span>
+                            <span class="statistics-value">{{objData.scoreKing}}滴</span>
                         </li>
                         <li class="statistics-item">
-                            <span class="statistics-label">本月拍照获得"嘉油"</span>
-                            <span class="statistics-value">100滴</span>
+                            <span class="statistics-label">本月剩余"嘉油"</span>
+                            <span class="statistics-value">{{objData.scoreLeft}}滴</span>
                         </li>
                         <li class="statistics-item">
-                            <span class="statistics-label">本月拍照获得"嘉油"</span>
-                            <span class="statistics-value">100滴</span>
+                            <span class="statistics-label">当前排名</span>
+                            <span class="statistics-value">{{objData.rank}}滴</span>
                         </li>
                     </ul>
                 </div>
@@ -42,15 +45,36 @@
                 </div>
                 <div class="c-button c-button-1"
                      @click="$router.push('/standings')">
-                    <span>我的奖品</span>
+                    <span>我的战绩</span>
                 </div>
             </div>
-        </div>
+        </super-box>
     </div>
 </template>
 
 <script>
+    import SuperBoxMixin from 'src/mixins/super-box.mixin'
     export default {
+        mixins: [
+            SuperBoxMixin,
+        ],
+        data () {
+            return {
+                objData: '',
+            }
+        },
+        created() {
+            this.reqUserInfo();
+        },
+        methods: {
+            reqUserInfo () {
+                this.superBoxLoading();
+                this.$api.reqUserInfo().then(res => {
+                    this.objData = res;
+                    this.superBoxSuccess();
+                }).toast(this.superBoxError.bind(this));
+            }
+        },
     }
 </script>
 
