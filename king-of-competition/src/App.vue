@@ -57,50 +57,6 @@
     .c-null{
         height: f(340);
     }
-    .c-button{
-        @extend %pr;
-        @extend %df;
-        @extend %aic;
-        @extend %jcc;
-        @extend %fwb;
-        @extend %ma;
-        @extend %cp;
-        @extend %bsb;
-        color: $color-primary;
-        &.c-button-1{
-            padding-top: f(42);
-            width: f(550);
-            height: f(250);
-            font-size: f(42);
-            background: url("~src/assets/images/button-1.png") center no-repeat;
-            background-size: contain;
-        }
-        &.c-button-2{
-            padding-top: f(20);
-            width: f(880);
-            height: f(355);
-            font-size: f(68);
-            background: url("~src/assets/images/button-2.png") center no-repeat;
-            background-size: contain;
-        }
-        &.c-button-3{
-            /*padding-top: f(20);*/
-            width: f(256);
-            height: f(100);
-            font-size: f(26);
-            background: url("~src/assets/images/button-3.png") center no-repeat;
-            background-size: contain;
-        }
-        &.c-button-4{
-            padding-top: f(30);
-            width: f(256 * 2);
-            height: f(100 * 2);
-            font-size: f(26);
-            background: url("~src/assets/images/button-1.png") center no-repeat;
-            background-size: contain;
-        }
-    }
-
     .c-border{
         border: j(2) solid #80d4ff;
         box-shadow: 0 0 j(20) j(10) rgba(128, 212, 255, 0.3)
