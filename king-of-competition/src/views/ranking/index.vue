@@ -43,7 +43,7 @@
             @extend %aic;
             @extend %pr;
             @extend %ma;
-            width: j(580);
+            width: j(570);
             height: j(90);
             i{
                 width: j(50);

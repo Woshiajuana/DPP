@@ -59,11 +59,11 @@
         @extend %bsb;
         @extend %cfff;
         @extend %fwb;
+        @extend %ma;
         padding-bottom: j(22);
         width: j(260);
         height: j(146);
         font-size: j(30);
-        margin: 0 j(30);
         &.c-button-1{
             background: url("~src/assets/images/btn-bg-1.png") no-repeat;
             background-size: contain;
@@ -90,6 +90,7 @@
     .c-card{
         @extend %ma;
         @extend %df;
+        @extend %pr;
         @extend %fdc;
         width: j(670);
         &:before{

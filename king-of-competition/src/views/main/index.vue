@@ -45,6 +45,7 @@
         @extend %jcc;
         @extend %h100;
         @extend %cp;
+        @extend %fwb;
         font-size: j(24);
         color: #84ade5;
         background: url("~src/assets/images/tab-bg-1.jpg") repeat-x;

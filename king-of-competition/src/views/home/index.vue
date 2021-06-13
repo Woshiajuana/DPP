@@ -5,13 +5,33 @@
             <i class="play-btn"></i>
             <div class="null-1"></div>
             <div class="button-group">
-                <div class="c-button c-button-2">
+                <div class="c-button c-button-2" @click="$router.push('/register')">
                     <span>马上抽奖</span>
                 </div>
-                <div class="c-button c-button-1">
+                <div class="c-button c-button-1" @click="$router.push('/photograph')">
                     <span>立刻开战</span>
                 </div>
             </div>
+        </div>
+        <div class="popup-rule-wrap" v-if="false">
+            <div class="popup-rule-inner">
+                <dl>
+                    <dt>6月1日-7月25日</dt>
+                    <dd>首次参与陈列打卡可获得<strong>100积分</strong>，后续每日参与陈列打卡可获得<strong>50积分</strong>，积分可用于抽奖，每日仅可参与1次打卡</dd>
+                </dl>
+                <div class="popup-rule-br"></div>
+                <dl>
+                    <dt>7月25日-7月30日</dt>
+                    <dd>将进行评分结算，积分前<strong>50名</strong>用户可获得荣耀好礼</dd>
+                </dl>
+                <i class="popup-rile-close"></i>
+            </div>
+        </div>
+        <div class="popup-wrap" v-if="false">
+            <div class="popup-video-inner popup-inner c-border">
+<!--                <video ref="video" :src="objData.ActiveInfo.VideoUrl" autoplay controls></video>-->
+            </div>
+            <i class="popup-close"></i>
         </div>
     </div>
 </template>
@@ -55,5 +75,104 @@
         @extend %df;
         @extend %aic;
         @extend %jcc;
+    }
+    .popup-rule-wrap{
+        @extend %pf;
+        @extend %t0;
+        @extend %l0;
+        @extend %r0;
+        @extend %b0;
+        z-index: 9;
+        overflow-y: auto;
+        background-color: rgba(0, 0, 0, .9);
+    }
+    .popup-rule-inner{
+        @extend %df;
+        @extend %fdc;
+        @extend %aic;
+        @extend %bsb;
+        @extend %pr;
+        color: #b2e5ff;
+        font-size: j(23);
+        width: j(750);
+        height: j(1200);
+        background: url("~src/assets/images/rule-bg-1.png") no-repeat;
+        background-size: contain;
+        line-height: 1.6;
+        padding-top: j(430);
+        dl{
+            width: j(525);
+            font-size: j(25);
+        }
+        dt{
+            @extend %fwb;
+            @extend %tac;
+            font-size: j(28);
+        }
+        strong{
+            color: #ad956e;
+        }
+    }
+    .popup-rule-br{
+        height: j(120);
+    }
+    .popup-rile-close{
+        @extend %cp;
+        @extend %pa;
+        @extend %l50;
+        margin-left: j(-40);
+        width: j(80);
+        height: j(80);
+        top: j(1020);
+    }
+
+
+    .popup-wrap{
+        @extend %pf;
+        @extend %t0;
+        @extend %l0;
+        @extend %w100;
+        @extend %h100;
+        @extend %df;
+        @extend %aic;
+        @extend %jcc;
+        @extend %fdc;
+        z-index: 999;
+        background-color: rgba(0, 0, 0, .6);
+    }
+    .popup-inner{
+        background: url("data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAoACgDASIAAhEBAxEB/8QAGQAAAwADAAAAAAAAAAAAAAAAAAIDAQQJ/8QAKBAAAgEABgsBAAAAAAAAAAAAAAIBAxExUZGxExQhIzRBU2FxctEy/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAEFBv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AOZhVuGT3bJRKkvbAo0Lq6bZ/bcu0HcM1EektjxGRipL2wHpISuNs2Ry7BEgGqS9sAAUq3DJ7tkoaVeimLfSjUq6um5T9Nza6O4VrD0lseIyG0q9FMW+jUlKtcblLI5td5CIAV0q9FMW+gBIq3DJ7tkoAFSHpLY8RkABCAAAf//Z");
+        video{
+            @extend %db;
+            @extend %w100;
+            @extend %h100;
+        }
+        &.popup-video-inner{
+            width: f(1090);
+            height: f(615);
+        }
+        &.popup-status-inner{
+            @extend %df;
+            @extend %fdc;
+            @extend %aic;
+            width: f(800);
+            padding: f(80) 0;
+            .c-button-4{
+                margin-top: f(40);
+            }
+        }
+        p{
+            @extend %tac;
+            font-size: f(48);
+            color: $color-primary;
+        }
+    }
+    .popup-close{
+        @extend %cp;
+        margin-top: f(80);
+        width: f(145);
+        height: f(145);
+        background: url("~src/assets/images/popup-close-icon.png") no-repeat;
+        background-size: contain;
     }
 </style>

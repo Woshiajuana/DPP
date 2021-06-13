@@ -235,7 +235,7 @@
             @extend %w100;
             @extend %l0;
             @extend %h100;
-            background: url("~src/assets/images/update-icon.jpg") no-repeat;
+            /*background: url("~src/assets/images/update-icon.jpg") no-repeat;*/
             background-size: contain;
         }
         img,

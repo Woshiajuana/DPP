@@ -36,10 +36,12 @@
 
             </div>
             <div class="button-group">
-                <div class="c-button c-button-2">
+                <div class="c-button c-button-2"
+                     @click="$router.push('/picture')">
                     <span>我的照片</span>
                 </div>
-                <div class="c-button c-button-1">
+                <div class="c-button c-button-1"
+                     @click="$router.push('/standings')">
                     <span>我的奖品</span>
                 </div>
             </div>
@@ -94,7 +96,7 @@
         @extend %ma;
         @extend %jcs;
         @extend %fwb;
-        width: j(580);
+        width: j(570);
         height: j(100);
         font-size: j(28);
         &:after{

@@ -18,17 +18,17 @@ const router = new Router({
                 {
                     path: '',
                     component: () => import('src/views/home'),
-                    meta: { title: '共竞王者' },
+                    meta: { status: 1, title: '共竞王者' },
                 },
                 {
                     path: 'ranking',
                     component: () => import('src/views/ranking'),
-                    meta: { title: '王者排位' },
+                    meta: { status: 1, title: '王者排位' },
                 },
                 {
                     path: '/mine',
                     component: () => import('src/views/mine'),
-                    meta: { title: '个人中心' },
+                    meta: { status: 1, title: '个人中心' },
                 },
             ]
         },
