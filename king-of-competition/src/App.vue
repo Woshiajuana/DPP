@@ -47,12 +47,31 @@
         padding-bottom: f(200);
         width: j(750);
         min-height: 100%;
-        background: #020617 url("~src/assets/images/bg-2.jpg") center top no-repeat;
+        background: #020617 url("~src/assets/images/bg-1.jpg") center top no-repeat;
         background-size: j(750) auto;
     }
-    .c-slogan{
-        @extend %w100;
-        height: f(380);
+
+    .c-button{
+        @extend %df;
+        @extend %aic;
+        @extend %jcc;
+        @extend %cp;
+        @extend %bsb;
+        @extend %cfff;
+        @extend %fwb;
+        padding-bottom: j(22);
+        width: j(260);
+        height: j(146);
+        font-size: j(30);
+        margin: 0 j(30);
+        &.c-button-1{
+            background: url("~src/assets/images/btn-bg-1.png") no-repeat;
+            background-size: contain;
+        }
+        &.c-button-2{
+            background: url("~src/assets/images/btn-bg-2.png") no-repeat;
+            background-size: contain;
+        }
     }
     .c-flex1{
         @extend %df1;
@@ -61,13 +80,42 @@
         height: f(340);
     }
     .c-border{
-        border: j(2) solid #80d4ff;
+        @extend %bsb;
+        border: j(3) solid #76b2f3;
         box-shadow: 0 0 j(20) j(10) rgba(128, 212, 255, 0.3)
         , 0 0 j(3) j(3) rgba(128, 212, 255, 0.5)
         , 0 0 j(3) j(3) rgba(128, 212, 255, 0.9)
-        , inset 0 0 j(10) j(10) rgba(128, 212, 255, 0.3);
+        , 0 0 j(10) j(10) rgba(128, 212, 255, 0.3);
     }
-
+    .c-card{
+        @extend %ma;
+        @extend %df;
+        @extend %fdc;
+        width: j(670);
+        &:before{
+            @extend %db;
+            @extend %w100;
+            content: '';
+            height: j(156);
+            background: url("~src/assets/images/card-bg-1.png") no-repeat;
+            background-size: 100% 100%;
+        }
+        &:after{
+            @extend %w100;
+            @extend %db;
+            content: '';
+            height: j(103);
+            margin-top: j(-2);
+            background: url("~src/assets/images/card-bg-3.png") no-repeat;
+            background-size: 100% 100%;
+        }
+    }
+    .c-card-content{
+        @extend %w100;
+        margin-top: -1px;
+        background: url("~src/assets/images/card-bg-2.png") repeat-y;
+        background-size: 100% 100%;
+    }
     .c-text-red{
         color: #ffe0e1;
         text-shadow: 0 0 j(10) #FF9B9B,
