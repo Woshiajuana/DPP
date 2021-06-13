@@ -6,15 +6,17 @@
                 <dt class="title">
                     <span>6月王者排位</span>
                 </dt>
-                <ul class="c-card-content">
-                    <li v-for="(item, index) in 10" :key="index">
-                        <i>{{index}}</i>
-                        <span>李某某</span>
-                        <span>途虎</span>
-                        <span>上海门店1</span>
-                        <span>1200滴</span>
-                    </li>
-                </ul>
+                <div class="c-card-content">
+                    <ul>
+                        <li v-for="(item, index) in 10" :key="index">
+                            <i>{{index}}</i>
+                            <span>李某某</span>
+                            <span>途虎</span>
+                            <span>上海门店1</span>
+                            <span>1200滴</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -38,6 +40,9 @@
         line-height: 1.6;
         font-size: j(28);
         color: #b2e5ff;
+        ul{
+            margin-top: j(-80);
+        }
         li{
             @extend %df;
             @extend %aic;
@@ -120,6 +125,6 @@
         @extend %w100;
         font-size: j(62);
         color: #e2ecf0;
-        top: j(50);
+        top: j(-20);
     }
 </style>

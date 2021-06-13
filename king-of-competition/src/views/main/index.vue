@@ -2,13 +2,13 @@
     <div class="main-wrap">
         <router-view class="view-container" ref="children"></router-view>
         <div class="tab-section">
-            <router-link to="/" exact class="tab-item">
+            <router-link replace to="/" exact class="tab-item">
                 <span>首页</span>
             </router-link>
-            <router-link to="/ranking" class="tab-item">
+            <router-link replace to="/ranking" class="tab-item">
                 <span>王者排位</span>
             </router-link>
-            <router-link to="/mine" class="tab-item">
+            <router-link replace to="/mine" class="tab-item">
                 <span>个人中心</span>
             </router-link>
         </div>

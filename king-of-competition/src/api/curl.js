@@ -4,10 +4,10 @@ import axios from 'axios'
 import router from 'src/router'
 
 export const baseURL =
-    window.location.hostname.includes('localhost')
-    || window.location.hostname.includes('192')
-        ? 'https://fwsplatform.castrol.com.cn/kpl/'
-        : 'https://kpl.castrol.com.cn/';
+    window.location.host.indexOf('192') > -1
+    || window.location.host.indexOf('localhost') > -1
+        ? 'http://47.118.57.150/'
+        : 'http://47.118.57.150/';
 
 const instance = axios.create({
     baseURL,
@@ -31,24 +31,23 @@ instance.interceptors.request.use((config) => {
 // 添加响应拦截器
 instance.interceptors.response.use((response) => {
     // 对响应数据做点什么
-    let { data, config } = response;
+    let { data: respData, config } = response;
     let { url, baseURL } = config;
-    console.log(`${ url.startsWith('http') ? url : baseURL + url } 请求结果 =>`, data);
-    if (!data) {
+    console.log(`${ url.startsWith('http') ? url : baseURL + url } 请求结果 =>`, respData);
+    if (!respData) {
         return Promise.reject(`网络繁忙，请稍后再试(1)`);
     }
-    let { Message, Status, Data } = data;
-    Message = '操作失败';
-    if ([201].indexOf(Status) > -1) {
+    let { msg, code, data } = respData;
+    if ([201].indexOf(code) > -1) {
         let { SAUserActiveId } = Vue.prototype.$user.get();
         Vue.prototype.$user.del();
         setTimeout(() => router.replace({ path: '/', query: { SAUserActiveId } }), 800);
-        return Promise.reject(Message || 'token无效，请重新授权');
+        return Promise.reject(msg || 'token无效，请重新授权');
     }
-    if (Status !== 0) {
-        return Promise.reject(Message || `网络繁忙，请稍后再试(2)`);
+    if (code !== 0) {
+        return Promise.reject(msg || `网络繁忙，请稍后再试(2)`);
     }
-    return Data;
+    return data;
 }, (error) => {
     console.log('请求响应错误 => ', error.response);
     error = error.response

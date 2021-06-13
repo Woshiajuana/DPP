@@ -1,59 +1,39 @@
 
 import curl, { baseURL } from 'src/api/curl'
 
-const wxBaseUrl = `https://wechatfws.castrol.com.cn/`;
+// 1.查询个人信息
+export const reqUserInfo = () => curl('index.php?r=v1/userinfo');
 
-export default {
+// 2.注册接口
+export const doUserRegister = data => curl('index.php?r=v1/register', data);
 
-    // 2.1	微信授权接口
-    doUserAuth () {
-        const uri = window.location.href;
-        window.location.replace(`${wxBaseUrl}wechatweb/Passport/Authorize?return_url=${encodeURIComponent(uri)}&scope=snsapi_userinfo`);
-    },
+// 3.发送验证码接⼝
+export const doSmsSend = data => curl('index.php?r=v1/verifycode', data);
 
-    // 2.2	获取AccessToken
-    doUserLogin: data => curl(`${wxBaseUrl}wechatweb/Passport/GetAccessToken`, data),
+// 4.上传照片接口
+export const doPhotographSubmit = data => {
+    const formData = new FormData();
+    Object.keys(data).forEach(key => {
+        formData.append(key, data[key]);
+    });
+    return curl(`index.php?r=v1/upload`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data;charset=UTF-8'
+        },
+    });
+};
 
-    // 2.3	获取JSSDK
-    reqJsSDKInfo: data => curl(`${wxBaseUrl}wechatweb/WechatApi/GetSiteJSSDK`, data, { loading: false, useToken: false, method: 'get' }),
+// 5. 我的照⽚片列列表接⼝口
+export const reqPictureList = data => curl('index.php?r=v1/piclist', data);
 
-    // 2.4	获取用户活动信息
-    reqUserInfo: (data, options) => curl(`H5Active/GetActiveInfo`, data, options),
+// 6. 抽奖接⼝口
+export const doLuckDrawSubmit = () => curl('index.php?r=v1/lottery');
 
-    // 2.5	提交用户观看视频状态
-    doWatchVideoStatusSubmit: data => curl(`H5Active/PostWatchStatus`, data),
+// 7. 添写中奖资料料接⼝口
+export const doReceivingSubmit = data => curl('index.php?r=v1/addprofile', data);
 
-    // 2.6	上传工单
-    doWorkOrderSubmit: data => curl(`H5Active/PostWorkOrder`, data),
+// 8. 奖品列列表
+export const reqLuckDrawList = () => curl('index.php?r=v1/awardlist');
 
-    // 2.7	用户调研
-    doQuestionnaireSubmit: data => curl(`H5Active/PostResearchUser`, data),
-
-    // 2.8	获取抽奖礼品信息(转盘)
-    reqLuckDrawInfo: data => curl(`H5Active/GetActiveGiftStoreList`, data, { loading: false }),
-
-    // 2.9	提交用户抽奖
-    doLuckDrawSubmit: data => curl(`H5Active/PostLotteryUser`, data),
-
-    // 2.10	提交中奖用户资料
-    doReceivingSubmit: data => curl(`H5Active/PostLotteryUserInfo`, data),
-
-    // 2.11	查看用户抽奖记录
-    reqRecordsList: (data, options) => curl(`H5Active/GetLotteryUserList`, data, options),
-
-    // 2.12	获取省份
-    reqProvinceList: data => curl(`Comm/GetProvince`, data),
-
-    // 2.13	获取城市
-    reqCityList: data => curl(`Comm/GetCity`, data),
-
-    // 2.14	发送验证码
-    doSmsSend: data => curl(`Comm/SendSmsCode`, data),
-
-    // 2.15	提交用户位置信息
-    doLocationSubmit: data => curl(`H5Active/PostUserCoord`, data),
-
-    // 2.14	获取模板消息ID
-    reqTemplateID: data => curl(`Comm/GetTemplateID`, data),
-
-}
+// 9. 排名接⼝口
+export const reqRankingInfo = () => curl('index.php?r=v1/ranklist');
