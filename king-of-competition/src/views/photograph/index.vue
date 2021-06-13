@@ -13,7 +13,8 @@
                 <br/>
                 审核通过会获得“嘉油”
             </p>
-            <div class="c-button c-button-1">
+            <div class="c-button c-button-1"
+                 @click="$router.push('/luck-draw')">
                 <span>上传照片</span>
             </div>
         </div>
