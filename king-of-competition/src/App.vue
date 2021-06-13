@@ -12,46 +12,6 @@
 <script>
     export default {
         name: 'app',
-        watch: {
-            '$route' () {
-                this.reqJsSDKInfo();
-            }
-        },
-        created () {
-            this.reqJsSDKInfo();
-        },
-        methods: {
-            reqJsSDKInfo () {
-                this.$api.reqJsSDKInfo({
-                    current_url: encodeURIComponent(window.location.href.split('#')[0]),
-                    nonce_str: new Date().getTime() + '',
-                }).then((res) => {
-                    if (typeof wx !== 'undefined') {
-                        wx.config({
-                            debug: false,
-                            ...res,
-                            jsApiList: [
-                                'getLocation',
-                                'onMenuShareTimeline',
-                                'onMenuShareAppMessage',
-                                'onMenuShareQZone',
-                                'onMenuShareWeibo',
-                            ],
-                            openTagList: [
-                                'wx-open-launch-weapp',
-                                'wx-open-subscribe',
-                            ],
-                        });
-                        wx.ready(() => {
-                            // REQ_ADDRESS_INFO
-                            if (this.$refs['children'].handleReady) {
-                                this.$refs['children'].handleReady();
-                            }
-                        });
-                    }
-                }).null();
-            },
-        },
     }
 </script>
 
@@ -86,8 +46,6 @@
         padding-bottom: f(200);
         width: j(750);
         min-height: 100%;
-        background: #020516 url("~src/assets/images/bg-1.jpg") center top no-repeat;
-        background-size: f(1125) auto;
     }
     .c-slogan{
         @extend %w100;
