@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="view-inner">
+
+        </div>
     </div>
 </template>
 
@@ -10,4 +13,7 @@
 
 <style lang="scss" scoped>
     @import "~src/assets/scss/define";
+    .view-inner{
+
+    }
 </style>

@@ -6,13 +6,61 @@ Vue.use(Router);
 const router = new Router({
     routes: [
         {
+            path: '/register',
+            component: () => import('src/views/register'),
+            meta: { status: 0, title: '注册' },
+        },
+        {
             path: '/',
-            name: 'home',
-            component: require('src/views/home'),
-            meta: {
-                status: 1,
-                title: '共竞王者',
-            }
+            component: () => import('src/views/main'),
+            meta: { status: 1 },
+            children: [
+                {
+                    path: '',
+                    component: () => import('src/views/home'),
+                    meta: { title: '共竞王者' },
+                },
+                {
+                    path: 'ranking',
+                    component: () => import('src/views/ranking'),
+                    meta: { title: '王者排位' },
+                },
+                {
+                    path: '/mine',
+                    component: () => import('src/views/mine'),
+                    meta: { title: '个人中心' },
+                },
+            ]
+        },
+        {
+            path: '/photograph',
+            component: () => import('src/views/photograph'),
+            meta: { status: 2, title: '拍照' },
+        },
+        {
+            path: '/poster',
+            component: () => import('src/views/poster'),
+            meta: { status: 3, title: '海报' },
+        },
+        {
+            path: '/luck-draw',
+            component: () => import('src/views/luck-draw'),
+            meta: { status: 4, title: '抽奖' },
+        },
+        {
+            path: '/receiving',
+            component: () => import('src/views/receiving'),
+            meta: { status: 5, title: '留资' },
+        },
+        {
+            path: '/standings',
+            component: () => import('src/views/standings'),
+            meta: { status: 7, title: '我的战绩' },
+        },
+        {
+            path: '/picture',
+            component: () => import('src/views/picture'),
+            meta: { status: 8, title: '我的照片' },
         },
     ]
 });
@@ -28,12 +76,12 @@ router.beforeEach((to, from, next) => {
         store.commit('SET_ANIMATE_NAME', from.meta.status > to.meta.status ? 'vux-pop-out' : from.meta.status === to.meta.status ? '' : 'vux-pop-in');
     }
     let { path } = to;
-    let { token } = Vue.prototype.$user.get();
-    if (!token && !['/'].includes(path)) {
-        next('/');
-    } else {
+    // let { token } = Vue.prototype.$user.get();
+    // if (!token && !['/'].includes(path)) {
+    //     next('/');
+    // } else {
         next();
-    }
+    // }
 });
 
 export default router

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <p>排汗吧</p>
     </div>
 </template>
 

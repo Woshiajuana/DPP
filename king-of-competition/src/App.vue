@@ -23,6 +23,8 @@
         @extend %h100;
         @extend %w100;
         @extend %oh;
+        @extend %cfff;
+        background-color: #020617;
     }
     #app{
         @extend %w100;
@@ -35,7 +37,6 @@
         @extend %r0;
         @extend %b0;
         overflow-y: auto;
-        background-color: #020516;
     }
     .view-inner{
         @extend %ma;
@@ -46,6 +47,8 @@
         padding-bottom: f(200);
         width: j(750);
         min-height: 100%;
+        background: #020617 url("~src/assets/images/bg-2.jpg") center top no-repeat;
+        background-size: j(750) auto;
     }
     .c-slogan{
         @extend %w100;
