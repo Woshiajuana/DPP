@@ -5,9 +5,9 @@ export default {
             objInput: {
                 brand: {
                     value: '',
-                    placeholder: '请选择连锁品牌',
+                    placeholder: '请填写连锁品牌',
                     use: [
-                        { nonempty: true, prompt: '请选择连锁品牌', },
+                        { nonempty: true, prompt: '请填写连锁品牌', },
                     ],
                 },
                 province: {
@@ -16,7 +16,7 @@ export default {
                     placeholder: '请选择省份',
                     is: false,
                     keyword: '',
-                    // options: [],
+                    options: [],
                     use: [
                         { nonempty: true, prompt: '请选择省份', },
                     ],
@@ -27,16 +27,16 @@ export default {
                     placeholder: '请选择城市',
                     is: false,
                     keyword: '',
-                    // options: [],
+                    options: [],
                     use: [
                         { nonempty: true, prompt: '请选择城市', },
                     ],
                 },
                 store: {
                     value: '',
-                    placeholder: '请选择门店',
+                    placeholder: '请填写门店',
                     use: [
-                        { nonempty: true, prompt: '请选择门店', },
+                        { nonempty: true, prompt: '请填写门店', },
                     ],
                 },
                 name: {
@@ -50,7 +50,7 @@ export default {
                     value: '',
                     type: 'tel',
                     maxlength: 11,
-                    placeholder: '手机号',
+                    placeholder: '请填写手机号',
                     use: [
                         { nonempty: true, prompt: '请填写手机号', },
                     ],

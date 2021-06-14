@@ -44,24 +44,14 @@
 
 <script>
     import FormView from 'src/components/form-view'
+    import FormViewMixin from 'src/mixins/form-view.mixin'
     import DataMixin from './data.mixin'
     export default {
         mixins: [
             DataMixin,
+            FormViewMixin,
         ],
-        watch: {
-            'objInput.Province.value' () {
-                this.objInput.City.value = '';
-                this.objInput.City.options = [];
-            }
-        },
-        created () {
-            console.log(this.$route.query);
-        },
         methods: {
-            handleSelect (item, key) {
-
-            },
             handleSmsSend (cb) {
                 if (this.$validate.check({x: this.objInput.mobile})) {
                     return null;
@@ -79,11 +69,13 @@
                 if (!this.isPrivacy) {
                     return this.$vux.toast.show('请先阅读并勾选用户知情同意书');
                 }
-                const options = this.$validate.input(this.objInput);
+                const { province, city, ...options } = this.$validate.input(this.objInput);
                 const { id } = this.$route.query;
                 this.$api.doReceivingSubmit({
                     ...options,
                     id,
+                    province: province.name,
+                    city: city.name,
                 }).then(() => {
                     this.$vux.toast.show('提交成功');
                     this.$router.go(-1);

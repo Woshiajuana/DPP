@@ -28,6 +28,18 @@ export const reqLuckDrawInfo = () => curl('index.php?r=v1/awardlist', {}, { load
 // 9. 排名接⼝口
 export const reqRankingList = () => curl('index.php?r=v1/ranklist', {}, { loading: false });
 
-
-// 10 我的战绩
+// 10. 我的战绩
 export const reqStandingsList = () => curl('index.php?r=v1/myaward', {}, { loading: false });
+
+// 11. 拉取省份接口
+export const reqProvinceList = () => curl('index.php?r=v1/provincelist');
+
+// 12. 拉取城市接口
+export const reqCityList = data => curl('index.php?r=v1/citylist', data);
+
+// 13. 授权接⼝口
+export const doUserAuth = () => {
+    // const uri = window.location.href;
+    window.location.replace(`${baseURL}index.php?r=weixin/authorize`);
+};
+

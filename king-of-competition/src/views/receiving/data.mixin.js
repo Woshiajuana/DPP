@@ -27,7 +27,7 @@ export default {
                     placeholder: '省份',
                     is: false,
                     keyword: '',
-                    // options: [],
+                    options: [],
                     use: [
                         { nonempty: true, prompt: '请选择省份', },
                     ],
@@ -38,7 +38,7 @@ export default {
                     placeholder: '城市',
                     is: false,
                     keyword: '',
-                    // options: [],
+                    options: [],
                     use: [
                         { nonempty: true, prompt: '请选择城市', },
                     ],

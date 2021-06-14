@@ -17,11 +17,13 @@
 
 <script>
     import FormView from 'src/components/form-view'
+    import FormViewMixin from 'src/mixins/form-view.mixin'
     import DataMixin from './data.mixin'
 
     export default {
         mixins: [
             DataMixin,
+            FormViewMixin,
         ],
         methods: {
             handleSmsSend (cb) {
@@ -34,13 +36,16 @@
                     cb();
                 }).toast()
             },
-            handleSelect () {},
             handleSubmit () {
                 if (this.$validate.check(this.objInput)) {
                     return null;
                 }
-                const options = this.$validate.input(this.objInput);
-                this.$api.doUserRegister(options).then(() => {
+                const { province, city, ...options } = this.$validate.input(this.objInput);
+                this.$api.doUserRegister({
+                    ...options,
+                    province: province.name,
+                    city: city.name,
+                }).then(() => {
                     this.$vux.toast.show('注册成功');
                     this.$router.replace('/');
                 }).toast();

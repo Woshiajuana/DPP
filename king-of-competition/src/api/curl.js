@@ -37,7 +37,10 @@ instance.interceptors.response.use((response) => {
     if (!respData) {
         return Promise.reject(`网络繁忙，请稍后再试(1)`);
     }
-    let { msg, code, data } = respData;
+    let { msg, code, data, Data, Status, Message } = respData;
+    if (Status !== undefined) code = Status;
+    if (Data !== undefined) data = Data;
+    if (Message !== undefined) msg = Message;
     if ([201].indexOf(code) > -1) {
         let { SAUserActiveId } = Vue.prototype.$user.get();
         Vue.prototype.$user.del();
