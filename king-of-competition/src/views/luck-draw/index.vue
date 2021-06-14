@@ -132,10 +132,10 @@
     }
     .title{
         @extend %db;
+        @extend %w100;
         @extend %ma;
-        width: j(400);
-        height: j(120);
-        background: url("~src/assets/images/title-1.png") no-repeat;
+        height: j(160);
+        background: url("~src/assets/images/title-4.png") no-repeat;
         background-size: contain;
     }
     .turntable-wrap{
