@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="view-inner">
-            <i class="rule-btn"></i>
-            <i class="play-btn"></i>
+            <i class="rule-btn" @click="isRulePopup = true"></i>
+            <i class="play-btn" @click="handleVideoPlay"></i>
             <div class="null-1"></div>
             <div class="button-group">
-                <div class="c-button c-button-2" @click="$router.push('/register')">
+                <div class="c-button c-button-2" @click="doUserAuthOrLogin">
                     <span>马上抽奖</span>
                 </div>
                 <div class="c-button c-button-1" @click="$router.push('/photograph')">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="popup-rule-wrap" v-if="false">
+        <div class="popup-rule-wrap" v-if="isRulePopup">
             <div class="popup-rule-inner">
                 <dl>
                     <dt>6月1日-7月25日</dt>
@@ -24,21 +24,48 @@
                     <dt>7月25日-7月30日</dt>
                     <dd>将进行评分结算，积分前<strong>50名</strong>用户可获得荣耀好礼</dd>
                 </dl>
-                <i class="popup-rile-close"></i>
+                <i class="popup-rile-close" @click="isRulePopup = false"></i>
             </div>
         </div>
-        <div class="popup-wrap" v-if="false">
+        <div class="popup-wrap" v-if="isVideoPopup">
             <div class="popup-video-inner popup-inner c-border">
-<!--                <video ref="video" :src="objData.ActiveInfo.VideoUrl" autoplay controls></video>-->
+                <video ref="video" src="http://120.55.81.220/video/JIKXMyZjKYoJ.mp4" controls></video>
             </div>
-            <i class="popup-close"></i>
+            <i class="popup-close" @click="isVideoPopup = false"></i>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-
+        data () {
+            return {
+                isRulePopup: false,
+                isVideoPopup: false,
+            };
+        },
+        created () {
+            console.log('document.cookie => ', document.cookie);
+        },
+        methods: {
+            doUserAuthOrLogin (fn) {
+                let { token } = this.$user.get();
+                if (token) {
+                    // 已经登录的情况
+                    if (fn) {
+                        typeof fn === 'function' ? fn() : this[fn]();
+                    }
+                    return null;
+                }
+                this.$api.doUserAuth();
+            },
+            handleVideoPlay () {
+                this.isVideoPopup = true;
+                this.$nextTick(() => {
+                    this.$refs.video.play();
+                });
+            },
+        },
     }
 </script>
 
