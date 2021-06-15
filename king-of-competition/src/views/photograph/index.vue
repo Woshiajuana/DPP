@@ -3,6 +3,7 @@
         <div class="view-inner">
             <div class="null-1"></div>
             <i class="title"></i>
+            <img :src="base64 || require('src/assets/images/img-demo.jpg')"/>
             <div class="image-box">
                 <img :src="base64 || require('src/assets/images/img-demo.jpg')"/>
                 <div class="image-border"></div>
@@ -33,11 +34,60 @@
                 if (!this.base64) {
                     return this.$vux.toast.show('请选择照片');
                 }
-                // 开始合成图片
-                this.$api.doPhotographSubmit({
-                    picBase: this.base64.split(',')[1],
-                }).then(res => {
+                const { head } = this.$route.query;
+                this.$helper.loadAllImages([
+                    require('src/assets/images/poster-bg.jpg'),
+                    `${head}?v=${Date.now()}`,
+                    this.base64,
+                ]).then(res => {
+                    const [ bg, avatar, photo ] = res;
+                    const innerWidth = window.innerWidth;
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const devicePixelRatio = window.devicePixelRatio || 1;
+                    const backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+                        ctx.mozBackingStorePixelRatio ||
+                        ctx.msBackingStorePixelRatio ||
+                        ctx.oBackingStorePixelRatio ||
+                        ctx.backingStorePixelRatio || 1;
+                    const ratio = devicePixelRatio / backingStoreRatio;
+                    const rpx = innerWidth < 750 ? innerWidth / 750 : 1;
+
+                    canvas.width = 750 * rpx * ratio;
+                    canvas.height = 1450 * rpx * ratio;
+                    console.log('ratio => ', ratio);
+                    console.log('rpx => ', rpx);
+                    ctx.scale(ratio, ratio);
+
+                    // 绘制口号 和 背景
+                    ctx.save();
+                    console.log(bg.width, bg.height);
+                    ctx.drawImage(bg, 0, 0, bg.width * rpx, bg.height * rpx);
+                    ctx.restore();
+
+                    // 绘制头像
+                    ctx.save();
+                    ctx.arc((750 - 640 + 88) * rpx * 0.5, (220 + 44) * rpx, 44 * rpx, 0, 2 * Math.PI);
+                    ctx.clip();
+                    ctx.drawImage(avatar, (750 - 640) * rpx * 0.5, 220 * rpx, 88 * rpx, 88 * rpx);
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // 绘制
+
+                    this.base64 = canvas.toDataURL();
+
                 }).toast();
+
+
+
+                // 开始合成图片
+                // this.$api.doPhotographSubmit({
+                //     picBase: this.base64.split(',')[1],
+                // }).then(res => {
+                // }).toast();
             },
             handleChange (event) {
                 let imgFile = event.target.files[0];
