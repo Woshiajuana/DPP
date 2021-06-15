@@ -12,7 +12,7 @@
                 <span>{{item.placeholder}}</span>
             </div>
             <div v-else-if="item.options"
-                 class="form-cell c-border form-cell-half form-cell-select"
+                 class="form-cell c-border form-cell-select"
                  @click="handleSelect(item, key)"
                  :class="[item.classes]">
                 <span class="form-value" :class="[!item.value && 'input-place']">{{item | filterValue}}</span>

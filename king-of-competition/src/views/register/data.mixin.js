@@ -5,9 +5,14 @@ export default {
             objInput: {
                 brand: {
                     value: '',
-                    placeholder: '请填写连锁品牌',
+                    placeholder: '请选择连锁品牌',
+                    is: false,
+                    keyword: '',
+                    options: [
+                        { name: '中策', value: '中策' }
+                    ],
                     use: [
-                        { nonempty: true, prompt: '请填写连锁品牌', },
+                        { nonempty: true, prompt: '请选择连锁品牌', },
                     ],
                 },
                 province: {

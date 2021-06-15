@@ -3,7 +3,6 @@
         <div class="view-inner">
             <div class="null-1"></div>
             <i class="title"></i>
-<!--            <img :src="objImage.base64 || require('src/assets/images/img-demo.jpg')" @click="handleSubmit"/>-->
             <div class="image-box">
                 <img :src="objImage.base64 || require('src/assets/images/img-demo.jpg')"/>
                 <div class="image-border"></div>
@@ -73,13 +72,13 @@
 
                     canvas.width = 750 * rpx * ratio;
                     canvas.height = 1450 * rpx * ratio;
-                    console.log('ratio => ', ratio);
-                    console.log('rpx => ', rpx);
+                    // console.log('ratio => ', ratio);
+                    // console.log('rpx => ', rpx);
                     ctx.scale(ratio, ratio);
 
                     // 绘制口号 和 背景
                     ctx.save();
-                    console.log(bg.width, bg.height);
+                    // console.log(bg.width, bg.height);
                     ctx.drawImage(bg, 0, 0, bg.width * rpx, bg.height * rpx);
                     ctx.restore();
 
