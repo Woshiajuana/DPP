@@ -72,7 +72,7 @@ const curl = (url, data = {}, options = {}) => {
     }, options);
     let { $vux, $user } = Vue.prototype;
     if (loading && $vux) $vux.loading.show();
-    let { token = '123456' } = $user.get();
+    let { token } = $user.get();
     if (useToken && token) {
         data instanceof FormData ? data.append('token', token) : (data.token = token);
     }
