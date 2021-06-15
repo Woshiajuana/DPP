@@ -41,7 +41,7 @@
                         <template v-else>
                             <img :src="objGift.pic">
                             <p>恭喜您获得<br/>{{objGift.name}}</p>
-                            <div class="popup-btn" @click="$router.push({ path: '/receiving', query: objGift })">
+                            <div class="popup-btn" @click="$router.push({ path: '/receiving', query: { id: objGift.historyId } })">
                                 <span>立即领取</span>
                             </div>
                         </template>
@@ -116,11 +116,12 @@
                     const r = Math.floor(Math.random() * (max - min)) + min;
                     this.duration = 5;
                     this.rotate = 360 * 10 + r;
-                    this.reqUserInfo();
                     setTimeout(() => {
+                        this.reqUserInfo();
                         this.duration = 0;
                         this.rotate = r;
                         setTimeout(() => {
+                            objGift.historyId = res.historyId;
                             this.objGift = objGift;
                         }, 500);
                     }, this.duration * 1000 + 100);
