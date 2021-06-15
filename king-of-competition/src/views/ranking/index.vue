@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div ref="scroller">
         <super-box
-            @refresh="reqDataList"
+            @refresh="handleRefresh"
             :data="superBox$"
             class="view-inner">
             <div class="null-1"></div>
@@ -11,7 +11,7 @@
                 </dt>
                 <div class="c-card-content">
                     <ul>
-                        <li v-for="(item, index) in arrData" :key="index">
+                        <li v-for="(item, index) in pagingData" :key="index">
                             <i>{{item.rank}}</i>
                             <span>{{item.name}}</span>
                             <span>{{item.brand}}</span>
@@ -19,6 +19,10 @@
                             <span>{{item.score || 0}}滴</span>
                         </li>
                     </ul>
+                    <footer-loading
+                        v-if="pagingTotal > 0"
+                        :is-loading="pagingTotal > pagingData.length"
+                    ></footer-loading>
                 </div>
             </div>
         </super-box>
@@ -27,29 +31,45 @@
 
 <script>
     import SuperBoxMixin from 'src/mixins/super-box.mixin'
+    import PagingMixin from 'src/mixins/paging.mixin'
+    import FooterLoading from 'src/components/footer-loading'
+
     export default {
         mixins: [
+            PagingMixin,
             SuperBoxMixin,
         ],
-        data () {
-            return {
-                arrData: '',
-            }
-        },
         created() {
-            this.reqDataList();
+            this.handleRefresh();
+        },
+        mounted () {
+            this.$nextTick(() => {
+                this.handleOnScroller = this.handleOnScroller.bind(this);
+                this.$refs['scroller'].addEventListener('scroll', this.handleOnScroller);
+            });
         },
         methods: {
-            reqDataList () {
-                this.superBoxLoading();
-                this.$api.reqRankingList().then(res => {
-                    this.arrData = res;
-                    this.arrData.length
-                        ? this.superBoxSuccess()
-                        : this.superBoxEmpty();
-                }).toast(this.superBoxError.bind(this));
-            }
+            handleRefresh (loading) {
+                if (!this.pagingData.length) {
+                    this.superBoxLoading();
+                }
+                this.pagingRefresh(loading);
+            },
+            pagingSetUrlParamsOptions () {
+                return { fn: 'reqRankingList' };
+            },
+            handleOnScroller () {
+                let $el = this.$refs['scroller'];
+                let { scrollTop = 0, scrollHeight = 0 } = $el;
+                let height = $el.getBoundingClientRect().height;
+                if (scrollHeight - scrollTop - height < 300) {
+                    this.pagingLoad();
+                }
+            },
         },
+        components: {
+            FooterLoading,
+        }
     }
 </script>
 

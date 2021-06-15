@@ -3,7 +3,7 @@ export default {
     data () {
         return {
             pagingIndex: 1,
-            pagingSize: 10,
+            pagingSize: 20,
             pagingTotal: -1,
             pagingData: [],
             pagingIsLoading: false,
@@ -23,19 +23,18 @@ export default {
                 options = {},
             } = this.pagingSetUrlParamsOptions();
             params = Object.assign({
-                PageIndex: current,
-                PageSize: this.pagingSize,
+                page: current,
+                pageNum: this.pagingSize,
                 ...params,
             }, params);
             this.$api[fn](params, {
                 loading,
                 ...options,
             }).then(res => {
-                let { Count: total = 0, Data: records = [] } = this.pagingFormatResult(res, params);
-                this.pagingTotal = total;
+                let { count: total = 0, list: records = [] } = this.pagingFormatResult(res, params);
+                this.pagingTotal = +total;
                 this.pagingData = current === 1 ? records : [...this.pagingData, ...records];
                 this.pagingIndex = current;
-                console.log(this.pagingData);
                 this.pagingReqCallSuccess(res, params);
             }).toast(this.pagingReqCallError.bind(this)).finally(() => {
                 this.pagingIsLoading = false;
@@ -44,7 +43,7 @@ export default {
 
         pagingFormatResult (res) {
             if (Array.isArray(res)) {
-                res = { Count: res.length, Data: res }
+                res = { count: res.length, list: res }
             }
             return res;
         },
