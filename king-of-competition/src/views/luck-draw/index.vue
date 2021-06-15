@@ -31,17 +31,20 @@
             <div class="c-card popup-inner">
                 <div class="c-card-content">
                     <div class="popup-content">
-                        <template v-if="objGift.id">
-                            <img :src="objGift.pic">
-                            <p>恭喜您!<br/>{{objGift.name}}</p>
-                        </template>
-                        <template v-else>
+                        <template v-if="objGift.isNotGift">
                             <img src="~src/assets/images/popup-gift-1.png">
                             <p>你我皆王者!<br/>重在参与</p>
+                            <div class="popup-btn" @click="handleLuckDraw">
+                                <span>再抽一次</span>
+                            </div>
                         </template>
-                        <div class="popup-btn" @click="handleLuckDraw">
-                            <span>再抽一次</span>
-                        </div>
+                        <template v-else>
+                            <img :src="objGift.pic">
+                            <p>恭喜您获得<br/>{{objGift.name}}</p>
+                            <div class="popup-btn" @click="$router.push({ path: '/receiving', query: objGift })">
+                                <span>立即领取</span>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -98,13 +101,15 @@
                 this.objGift = '';
                 if (this.rotate > 360) return null;
                 this.$api.doLuckDrawSubmit().then(res => {
-                    let { id } = res || {};
+                    let id = +res.id; // 0 未中奖
+                    let objGift = '';
                     if (!id) {
                         // 没有中奖
                         const noGifts = this.arrGift.filter(res => res.isNotGift);
                         id = noGifts[Math.floor(Math.random() * noGifts.length)].id;
                     }
-                    const { min, max, name } = this.arrGift.find(item => item.id === id) || {};
+                    objGift = this.arrGift.find(item => item.id === id + '') || {};
+                    const { min, max, name } = objGift;
                     if (!name) {
                         throw '活动太火爆了，请稍后再试';
                     }
@@ -116,7 +121,7 @@
                         this.duration = 0;
                         this.rotate = r;
                         setTimeout(() => {
-                            this.objGift = res || {};
+                            this.objGift = objGift;
                         }, 500);
                     }, this.duration * 1000 + 100);
                 }).toast();
@@ -250,7 +255,8 @@
         }
         p{
             @extend %tac;
-            line-height: 1.6;
+            margin-top: j(20);
+            line-height: 1.2;
             color: #b2e5ff;
         }
     }
