@@ -2,7 +2,7 @@
 import curl, { baseURL } from 'src/api/curl'
 
 // 1.查询个人信息
-export const reqUserInfo = () => curl('index.php?r=v1/userinfo', {}, { loading: false });
+export const reqUserInfo = (data = {}, options = {  }) => curl('index.php?r=v1/userinfo', {}, { loading: false, ...options });
 
 // 2.注册接口
 export const doUserRegister = data => curl('index.php?r=v1/register', data);

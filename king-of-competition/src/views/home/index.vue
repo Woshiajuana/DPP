@@ -5,10 +5,10 @@
             <i class="play-btn" @click="handleVideoPlay"></i>
             <div class="null-1"></div>
             <div class="button-group">
-                <div class="c-button c-button-2" @click="doUserAuthOrLogin">
+                <div class="c-button c-button-2" @click="doUserAuthOrLogin('handleLuckDraw')">
                     <span>马上抽奖</span>
                 </div>
-                <div class="c-button c-button-1" @click="$router.push('/photograph')">
+                <div class="c-button c-button-1" @click="doUserAuthOrLogin('handleStart')">
                     <span>立刻开战</span>
                 </div>
             </div>
@@ -45,16 +45,21 @@
             };
         },
         created () {
-            console.log('window.location.href => ', window.location.href);
+            this.doUserAuthOrLogin();
         },
         methods: {
             doUserAuthOrLogin (fn) {
-                let { token } = this.$user.get();
+                const { token } = this.$user.get();
                 if (token) {
-                    // 已经登录的情况
-                    if (fn) {
-                        typeof fn === 'function' ? fn() : this[fn]();
-                    }
+                    this.$api.reqUserInfo({}, {
+                        loading: true
+                    }).then(res => {
+                        const { mobile } = res || {};
+                        if (!mobile) {
+                            return this.$router.replace('/register');
+                        }
+                        fn && this[fn](res);
+                    }).toast();
                     return null;
                 }
                 this.$api.doUserAuth();
@@ -64,6 +69,21 @@
                 this.$nextTick(() => {
                     this.$refs.video.play();
                 });
+            },
+            handleLuckDraw () {
+                this.$router.push('/luck-draw');
+            },
+            handleStart (user) {
+                this.$api.reqPictureList().then(res => {
+                    const item = res[0] || {};
+                    const { status, date } = item;
+                    if (this.$helper.formatDate('yyyy-MM-dd') === date
+                        && status !== this.$config.PICTURE_STATUS.valueByKey.SHSB) {
+                        this.$router.push({ path: '/poster', query: item });
+                    } else {
+                        this.$router.push({ path: '/photograph', query: user });
+                    }
+                }).toast();
             },
         },
     }

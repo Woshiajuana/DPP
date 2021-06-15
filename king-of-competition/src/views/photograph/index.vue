@@ -33,6 +33,7 @@
                 if (!this.base64) {
                     return this.$vux.toast.show('请选择照片');
                 }
+                // 开始合成图片
                 this.$api.doPhotographSubmit({
                     picBase: this.base64.split(',')[1],
                 }).then(res => {

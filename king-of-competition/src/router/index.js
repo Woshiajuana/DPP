@@ -8,7 +8,7 @@ const router = new Router({
         {
             path: '/register',
             component: () => import('src/views/register'),
-            meta: { status: 0, title: '注册' },
+            meta: { status: 2, title: '注册' },
         },
         {
             path: '/',

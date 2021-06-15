@@ -38,18 +38,18 @@ instance.interceptors.response.use((response) => {
     if (!respData) {
         return Promise.reject(`网络繁忙，请稍后再试(1)`);
     }
-    let { msg, code, data, Data, Status, Message } = respData;
+    let { message, code, data, Data, Status, Message } = respData;
     if (Status !== undefined) code = Status;
     if (Data !== undefined) data = Data;
-    if (Message !== undefined) msg = Message;
+    if (Message !== undefined) message = Message;
     if ([201].indexOf(code) > -1) {
         let { SAUserActiveId } = Vue.prototype.$user.get();
         Vue.prototype.$user.del();
         setTimeout(() => router.replace({ path: '/', query: { SAUserActiveId } }), 800);
-        return Promise.reject(msg || 'token无效，请重新授权');
+        return Promise.reject(message || 'token无效，请重新授权');
     }
     if (code !== 0) {
-        return Promise.reject(msg || `网络繁忙，请稍后再试(2)`);
+        return Promise.reject(message || `网络繁忙，请稍后再试(2)`);
     }
     return data;
 }, (error) => {
