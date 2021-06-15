@@ -52,7 +52,7 @@
                 const { token } = this.$user.get();
                 if (token) {
                     this.$api.reqUserInfo({}, {
-                        loading: true
+                        loading: !!fn
                     }).then(res => {
                         const { mobile } = res || {};
                         if (!mobile) {
