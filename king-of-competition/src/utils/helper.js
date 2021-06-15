@@ -30,7 +30,8 @@ export default {
             img.onload = () => {
                 resolve(img);
             };
-            img.onerror = () => {
+            img.onerror = (err) => {
+                console.log('err => ', err);
                 reject('图片加载失败')
             };
         });

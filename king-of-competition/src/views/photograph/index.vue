@@ -19,14 +19,30 @@
                 <span>上传照片</span>
             </div>
         </div>
+        <div class="popup-cropper" v-if="isCropperPopup">
+            <vue-cropper
+                :img="objImage.base64"
+                ref="cropper"
+                autoCrop
+                fixedBox
+                :autoCropWidth="628 * 0.5"
+                :autoCropHeight="465 * 0.5"
+            ></vue-cropper>
+            <div class="popup-cropper-button-group">
+                <div class="popup-cropper-button" @click="handleCropperCancel">取消</div>
+                <div class="popup-cropper-button" @click="handleCropperSure">确认</div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import { VueCropper }  from 'vue-cropper'
     export default {
         data () {
             return {
                 objImage: '',
+                isCropperPopup: false,
             };
         },
         methods: {
@@ -35,7 +51,7 @@
                     return this.$vux.toast.show('请选择照片');
                 }
                 const { head } = this.$route.query;
-                const { base64, width, height } = this.objImage;
+                const { base64 } = this.objImage;
                 this.$vux.loading.show();
                 this.$helper.loadAllImages([
                     require('src/assets/images/poster-bg.jpg'),
@@ -67,16 +83,16 @@
                     ctx.drawImage(bg, 0, 0, bg.width * rpx, bg.height * rpx);
                     ctx.restore();
 
+                    // 绘制照片
+                    ctx.save();
+                    ctx.drawImage(photo, (750 - 620) * 0.5 * rpx, 408 * rpx, 620 * rpx, 465 * rpx);
+                    ctx.restore();
+
                     // 绘制头像
                     ctx.save();
                     ctx.arc((750 * 0.5 + 3) * rpx, (320 + 50) * rpx, 50 * rpx, 0, 2 * Math.PI);
                     ctx.clip();
                     ctx.drawImage(avatar, (750 * 0.5 - 50) * rpx, 320 * rpx, 100 * rpx, 100 * rpx);
-                    ctx.restore();
-
-                    // 绘制照片
-                    ctx.save();
-                    ctx.drawImage(photo, (750 - 620) * 0.5 * rpx, 408 * rpx, 620 * rpx, 465 * rpx);
                     ctx.restore();
 
                     // this.base64 = canvas.toDataURL();
@@ -108,10 +124,27 @@
                     return this.$image.compressQuality(base64, { width: 1024 });
                 }).then(res => {
                     this.objImage = res;
+                    this.isCropperPopup = true;
                 }).toast().finally(() => {
                     this.$vux.loading.hide();
                 });
             },
+            handleCropperSure () {
+                // 获取截图的base64 数据
+                this.$nextTick(() => {
+                    this.$refs.cropper.getCropData(data => {
+                        this.objImage.base64 = data;
+                        this.isCropperPopup = false;
+                    });
+                });
+            },
+            handleCropperCancel () {
+                this.objImage = '';
+                this.isCropperPopup = false;
+            },
+        },
+        components: {
+            VueCropper,
         },
     }
 </script>
@@ -172,5 +205,40 @@
         font-size: j(25);
         line-height: 1.6;
         margin:  j(30) 0;
+    }
+    .popup-cropper{
+        @extend %pf;
+        @extend %w100;
+        @extend %t0;
+        @extend %l0;
+        @extend %h100;
+    }
+    .popup-cropper-button-group{
+        @extend %pf;
+        @extend %b0;
+        @extend %w100;
+        @extend %l0;
+        @extend %df;
+        @extend %aic;
+        @extend %jcs;
+        @extend %bsb;
+        /*padding: j(20);*/
+    }
+    .popup-cropper-button{
+        @extend %df;
+        @extend %df1;
+        @extend %aic;
+        @extend %jcc;
+        @extend %cfff;
+        @extend %cp;
+        /*width: j(120);*/
+        height: j(88);
+        font-size: j(30);
+        &:first-child{
+            background-color: #999;
+        }
+        &:last-child{
+            background-color: $color-danger;
+        }
     }
 </style>
