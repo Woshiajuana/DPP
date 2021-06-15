@@ -76,9 +76,9 @@
             handleStart (user) {
                 this.$api.reqPictureList().then(res => {
                     const item = res[0] || {};
-                    const { status, date } = item;
+                    const { state, date } = item;
                     if (this.$helper.formatDate('yyyy-MM-dd') === date
-                        && status !== this.$config.PICTURE_STATUS.valueByKey.SHSB) {
+                        && state !== this.$config.PICTURE_STATUS.valueByKey.SHSB) {
                         this.$router.push({ path: '/poster', query: item });
                     } else {
                         this.$router.push({ path: '/photograph', query: user });
