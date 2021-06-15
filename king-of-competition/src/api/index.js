@@ -39,7 +39,7 @@ export const reqCityList = data => curl('index.php?r=v1/citylist', data);
 
 // 13. 授权接⼝口
 export const doUserAuth = () => {
-    // const uri = window.location.href;
-    window.location.replace(`${baseURL}index.php?r=weixin/authorize`);
+    const uri = window.location.href;
+    window.location.replace(`${baseURL}index.php?r=weixin/authorize&uri=${encodeURIComponent(uri)}`);
 };
 

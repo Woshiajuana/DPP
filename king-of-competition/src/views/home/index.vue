@@ -45,7 +45,7 @@
             };
         },
         created () {
-            console.log('document.cookie => ', document.cookie);
+            console.log('window.location.href => ', window.location.href);
         },
         methods: {
             doUserAuthOrLogin (fn) {
