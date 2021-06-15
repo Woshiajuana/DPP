@@ -30,7 +30,7 @@ export default {
             ctx.drawImage(that, 0, 0, w, h);
             // 回调函数返回base64的值
             let base64 = canvas.toDataURL('image/jpeg', quality);
-            resolve({base64, w, h});
+            resolve({base64, width: w, height: h});
         }
     }),
     // 转 base64

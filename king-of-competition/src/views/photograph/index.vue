@@ -3,9 +3,9 @@
         <div class="view-inner">
             <div class="null-1"></div>
             <i class="title"></i>
-            <img :src="base64 || require('src/assets/images/img-demo.jpg')"/>
+<!--            <img :src="objImage.base64 || require('src/assets/images/img-demo.jpg')" @click="handleSubmit"/>-->
             <div class="image-box">
-                <img :src="base64 || require('src/assets/images/img-demo.jpg')"/>
+                <img :src="objImage.base64 || require('src/assets/images/img-demo.jpg')"/>
                 <div class="image-border"></div>
                 <input type="file" accept='image/*' @change="handleChange"/>
             </div>
@@ -26,19 +26,21 @@
     export default {
         data () {
             return {
-                base64: '',
+                objImage: '',
             };
         },
         methods: {
             handleSubmit () {
-                if (!this.base64) {
+                if (!this.objImage) {
                     return this.$vux.toast.show('请选择照片');
                 }
                 const { head } = this.$route.query;
+                const { base64, width, height } = this.objImage;
+                this.$vux.loading.show();
                 this.$helper.loadAllImages([
                     require('src/assets/images/poster-bg.jpg'),
                     `${head}?v=${Date.now()}`,
-                    this.base64,
+                    base64,
                 ]).then(res => {
                     const [ bg, avatar, photo ] = res;
                     const innerWidth = window.innerWidth;
@@ -67,27 +69,28 @@
 
                     // 绘制头像
                     ctx.save();
-                    ctx.arc((750 - 640 + 88) * rpx * 0.5, (220 + 44) * rpx, 44 * rpx, 0, 2 * Math.PI);
+                    ctx.arc((750 * 0.5 + 3) * rpx, (320 + 50) * rpx, 50 * rpx, 0, 2 * Math.PI);
                     ctx.clip();
-                    ctx.drawImage(avatar, (750 - 640) * rpx * 0.5, 220 * rpx, 88 * rpx, 88 * rpx);
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 3;
-                    ctx.stroke();
+                    ctx.drawImage(avatar, (750 * 0.5 - 50) * rpx, 320 * rpx, 100 * rpx, 100 * rpx);
                     ctx.restore();
 
-                    // 绘制
+                    // 绘制照片
+                    ctx.save();
+                    ctx.drawImage(photo, (750 - 620) * 0.5 * rpx, 408 * rpx, 620 * rpx, 465 * rpx);
+                    ctx.restore();
 
-                    this.base64 = canvas.toDataURL();
-
-                }).toast();
-
-
-
-                // 开始合成图片
-                // this.$api.doPhotographSubmit({
-                //     picBase: this.base64.split(',')[1],
-                // }).then(res => {
-                // }).toast();
+                    // this.base64 = canvas.toDataURL();
+                    return canvas.toDataURL();
+                }).then(res => {
+                    return this.$api.doPhotographSubmit({
+                        picBase: base64.split(',')[1],
+                        picPosterBase: res.split(',')[1],
+                    });
+                }).then(res => {
+                    this.$router.replace({ path: '/poster', query: res });
+                }).toast().finally(() => {
+                    this.$vux.loading.hide();
+                });
             },
             handleChange (event) {
                 let imgFile = event.target.files[0];
@@ -103,8 +106,8 @@
                 this.$vux.loading.show();
                 this.$image.toBase64(imgFile).then((base64) => {
                     return this.$image.compressQuality(base64, { width: 1024 });
-                }).then(({ base64 }) => {
-                    this.base64 = base64;
+                }).then(res => {
+                    this.objImage = res;
                 }).toast().finally(() => {
                     this.$vux.loading.hide();
                 });

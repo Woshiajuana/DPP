@@ -32,7 +32,7 @@
                         </li>
                         <li class="statistics-item">
                             <span class="statistics-label">当前排名</span>
-                            <span class="statistics-value">{{objData.rank}}滴</span>
+                            <span class="statistics-value">{{objData.rank}}</span>
                         </li>
                     </ul>
                 </div>

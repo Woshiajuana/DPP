@@ -10,11 +10,11 @@
                     <ul>
                         <li v-for="(item, index) in arrData" :key="index">
                             <div class="image">
-                                <img :src="item.url" />
+                                <img :src="item.picUrl" />
                             </div>
                             <div class="info">
                                 <p>上传日期：{{item.date}}</p>
-                                <p>状态：<strong :class="['status-' + item.status]">{{$config.PICTURE_STATUS.labelByValue[item.status]}}</strong></p>
+                                <p>状态：<strong :class="['status-' + item.state]">{{$config.PICTURE_STATUS.labelByValue[item.state]}}</strong></p>
                                 <p>获得"嘉油"：<strong>{{item.score}}滴</strong></p>
                             </div>
                         </li>
