@@ -4,13 +4,14 @@ export default {
         return {
             objInput: {
                 brand: {
-                    value: '',
+                    value: '中策',
                     placeholder: '请选择连锁品牌',
-                    is: false,
-                    keyword: '',
-                    options: [
-                        { name: '中策', value: '中策' }
-                    ],
+                    disabled: true,
+                    // is: false,
+                    // keyword: '',
+                    // options: [
+                    //     { name: '中策', value: '中策' }
+                    // ],
                     use: [
                         { nonempty: true, prompt: '请选择连锁品牌', },
                     ],

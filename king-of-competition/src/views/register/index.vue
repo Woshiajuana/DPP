@@ -40,12 +40,11 @@
                 if (this.$validate.check(this.objInput)) {
                     return null;
                 }
-                const { province, city, brand, ...options } = this.$validate.input(this.objInput);
+                const { province, city, ...options } = this.$validate.input(this.objInput);
                 this.$api.doUserRegister({
                     ...options,
                     province: province.name,
                     city: city.name,
-                    brand: brand.name,
                 }).then(() => {
                     this.$vux.toast.show('注册成功');
                     this.$router.replace('/');

@@ -35,6 +35,7 @@
             <div v-else class="form-cell c-border"
                  :class="[item.classes]">
                 <input
+                    :disabled="item.disabled"
                     :maxlength="item.maxlength || 9999"
                     class="form-value"
                     :type="item.type || 'text'"
