@@ -9,7 +9,7 @@
                 <div class="c-card-content">
                     <ul>
                         <li v-for="(item, index) in arrData" :key="index">
-                            <div class="image">
+                            <div class="image" @click="preview = item.picUrl">
                                 <img :src="item.picUrl" />
                             </div>
                             <div class="info">
@@ -22,6 +22,11 @@
                 </div>
             </div>
         </super-box>
+        <div class="popup-image"
+             @click="preview = false"
+             v-if="preview">
+            <img :src="preview">
+        </div>
     </div>
 </template>
 
@@ -34,6 +39,7 @@
         data () {
             return {
                 arrData: '',
+                preview: '',
             }
         },
         created() {
@@ -115,5 +121,21 @@
     }
     .status-2{
         color: #ee0000;
+    }
+    .popup-image{
+        @extend %pf;
+        @extend %df;
+        @extend %aic;
+        @extend %jcc;
+        @extend %t0;
+        @extend %l0;
+        @extend %w100;
+        @extend %h100;
+        background-color: rgba(0, 0, 0, .6);
+        img{
+            @extend %db;
+            max-width: 100%;
+            max-height: 100%;
+        }
     }
 </style>
