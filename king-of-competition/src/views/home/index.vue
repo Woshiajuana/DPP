@@ -29,7 +29,7 @@
         </div>
         <div class="popup-wrap" v-if="isVideoPopup">
             <div class="popup-video-inner popup-inner c-border">
-                <video ref="video" src="http://47.118.57.150/uploads/castrol1.mp4" controls></video>
+                <video ref="video" src="https://chainstore.g2campaign.com/uploads/castrol1.mp4" controls></video>
             </div>
             <i class="popup-close" @click="isVideoPopup = false"></i>
         </div>
