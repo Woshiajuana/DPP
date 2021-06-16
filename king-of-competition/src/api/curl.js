@@ -42,11 +42,10 @@ instance.interceptors.response.use((response) => {
     if (Status !== undefined) code = Status;
     if (Data !== undefined) data = Data;
     if (Message !== undefined) message = Message;
-    if ([201].indexOf(code) > -1) {
-        let { SAUserActiveId } = Vue.prototype.$user.get();
+    if ([1].indexOf(+code) > -1) {
         Vue.prototype.$user.del();
-        setTimeout(() => router.replace({ path: '/', query: { SAUserActiveId } }), 800);
-        return Promise.reject(message || 'token无效，请重新授权');
+        setTimeout(() => router.replace({ path: '/' }), 800);
+        return Promise.reject(message || 'token无效，请重新授权登录');
     }
     if (code !== 0) {
         return Promise.reject(message || `网络繁忙，请稍后再试(2)`);
