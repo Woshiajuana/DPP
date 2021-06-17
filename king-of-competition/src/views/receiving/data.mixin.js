@@ -54,7 +54,7 @@ export default {
                     value: '',
                     classes: 'form-cell-half',
                     type: 'tel',
-                    maxlength: 6,
+                    maxlength: 4,
                     placeholder: '验证码',
                     useCode: true,
                     use: [

@@ -6,16 +6,15 @@
             <div class="image-box">
                 <img :src="objImage.base64 || require('src/assets/images/img-demo.jpg')"/>
                 <div class="image-border"></div>
-                <input type="file" accept='image/*' @change="handleChange"/>
             </div>
             <p class="tips">
                 请按照示例拍摄照片
                 <br/>
                 审核通过会获得“嘉油”
             </p>
-            <div class="c-button c-button-1"
-                 @click="handleSubmit">
+            <div class="c-button c-button-1">
                 <span>上传照片</span>
+                <input type="file" accept='image/*' @change="handleChange"/>
             </div>
         </div>
         <div class="popup-cropper" v-if="isCropperPopup">
@@ -91,15 +90,16 @@
                     ctx.save();
                     ctx.arc((750 * 0.5 + 3) * rpx, (320 + 50) * rpx, 50 * rpx, 0, 2 * Math.PI);
                     ctx.clip();
-                    ctx.drawImage(avatar, (750 * 0.5 - 50) * rpx, 320 * rpx, 100 * rpx, 100 * rpx);
+                    ctx.drawImage(avatar, (750 * 0.5 - 50 + 3) * rpx, 320 * rpx, 100 * rpx, 100 * rpx);
                     ctx.restore();
 
-                    // this.base64 = canvas.toDataURL();
                     return canvas.toDataURL();
+                }).then(res => {
+                    return this.$image.compressQuality(res, { width: 1024 });
                 }).then(res => {
                     return this.$api.doPhotographSubmit({
                         picBase: base64.split(',')[1],
-                        picPosterBase: res.split(',')[1],
+                        picPosterBase: res.base64.split(',')[1],
                     });
                 }).then(res => {
                     this.$router.replace({ path: '/poster', query: res });
@@ -120,7 +120,7 @@
                 }
                 this.$vux.loading.show();
                 this.$image.toBase64(imgFile).then((base64) => {
-                    return this.$image.compressQuality(base64, { width: 1024 });
+                    return this.$image.compressQuality(base64, { width: 1080 });
                 }).then(res => {
                     this.objImage = res;
                     this.isCropperPopup = true;
@@ -134,6 +134,7 @@
                     this.$refs.cropper.getCropData(data => {
                         this.objImage.base64 = data;
                         this.isCropperPopup = false;
+                        this.handleSubmit();
                     });
                 });
             },
@@ -176,17 +177,6 @@
             width: j(628);
             height: j(465);
             background: url("data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAoACgDASIAAhEBAxEB/8QAGQAAAwADAAAAAAAAAAAAAAAAAAIDAQQJ/8QAKBAAAgEABgsBAAAAAAAAAAAAAAIBAxExUZGxExQhIzRBU2FxctEy/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAEFBv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AOZhVuGT3bJRKkvbAo0Lq6bZ/bcu0HcM1EektjxGRipL2wHpISuNs2Ry7BEgGqS9sAAUq3DJ7tkoaVeimLfSjUq6um5T9Nza6O4VrD0lseIyG0q9FMW+jUlKtcblLI5td5CIAV0q9FMW+gBIq3DJ7tkoAFSHpLY8RkABCAAAf//Z");
-        }
-        input{
-            @extend %pa;
-            @extend %db;
-            @extend %t50;
-            @extend %l50;
-            margin-top: j(-466 / 2 + 3);
-            margin-left: j(-628 / 2 + 3);
-            width: j(628);
-            height: j(465);
-            opacity: 0;
         }
     }
     .image-border{
@@ -238,6 +228,18 @@
         }
         &:last-child{
             background-color: $color-danger;
+        }
+    }
+    .c-button{
+        @extend %pr;
+        input{
+            @extend %pa;
+            @extend %db;
+            @extend %t0;
+            @extend %l0;
+            @extend %w100;
+            @extend %h100;
+            opacity: 0;
         }
     }
 </style>
