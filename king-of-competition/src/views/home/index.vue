@@ -45,7 +45,7 @@
             };
         },
         created () {
-            // this.doUserAuthOrLogin();
+            this.doUserAuthOrLogin();
         },
         methods: {
             doUserAuthOrLogin (fn) {

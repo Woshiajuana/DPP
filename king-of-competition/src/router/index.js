@@ -6,21 +6,6 @@ Vue.use(Router);
 const router = new Router({
     routes: [
         {
-            path: '/test3',
-            component: () => import('src/views/test3'),
-            meta: { status: 1, title: '测试2' },
-        },
-        {
-            path: '/test2',
-            component: () => import('src/views/test2'),
-            meta: { status: 1, title: '测试2' },
-        },
-        {
-            path: '/test',
-            component: () => import('src/views/test'),
-            meta: { status: 1, title: '测试' },
-        },
-        {
             path: '/register',
             component: () => import('src/views/register'),
             meta: { status: 2, title: '注册' },
@@ -90,20 +75,20 @@ router.beforeEach((to, from, next) => {
     if (store) {
         store.commit('SET_ANIMATE_NAME', from.meta.status > to.meta.status ? 'vux-pop-out' : from.meta.status === to.meta.status ? '' : 'vux-pop-in');
     }
-    // const { path, query } = to;
-    // if (path === '/' && query.token) {
-    //     有 token 的情况
-        // Vue.prototype.$user.set(query);
-        // next('/');
-    // } else {
-    //     url 没有 token 判断是否登录
-    //     const { token } = Vue.prototype.$user.get();
-    //     if (!token && !['/', '/test', '/test2', '/test3'].includes(path)) {
-    //         next('/');
-    //     } else {
+    const { path, query } = to;
+    if (path === '/' && query.token) {
+        // 有 token 的情况
+        Vue.prototype.$user.set(query);
+        next('/');
+    } else {
+        // url 没有 token 判断是否登录
+        const { token } = Vue.prototype.$user.get();
+        if (!token && !['/'].includes(path)) {
+            next('/');
+        } else {
             next();
-        // }
-    // }
+        }
+    }
 });
 
 export default router
