@@ -2,6 +2,8 @@
 export default {
     data () {
         return {
+            isPopup: false,
+            isPrivacy: false,
             objInput: {
                 brand: {
                     value: '中策',

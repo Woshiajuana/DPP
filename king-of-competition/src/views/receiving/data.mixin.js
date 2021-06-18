@@ -2,8 +2,6 @@
 export default {
     data () {
         return {
-            isPopup: false,
-            isPrivacy: false,
             objInput: {
                 name: {
                     value: '',

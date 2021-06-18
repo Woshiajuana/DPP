@@ -6,8 +6,8 @@ import router from 'src/router'
 export const baseURL =
     window.location.host.indexOf('192') > -1
     || window.location.host.indexOf('localhost') > -1
-        ? 'https://chainstore.g2campaign.com/'
-        : 'https://chainstore.g2campaign.com/';
+        ? '//chainstore.g2campaign.com/'
+        : '//chainstore.g2campaign.com/';
 
 const instance = axios.create({
     baseURL,
@@ -21,7 +21,7 @@ const instance = axios.create({
 instance.interceptors.request.use((config) => {
     // 在发送请求之前做些什么
     let { url, baseURL, data, params } = config;
-    console.log(`${ url.startsWith('http') ? url : baseURL + url } 请求参数 =>`, data || params);
+    console.log(`${ url.startsWith('http') || url.startsWith('//') ? url : baseURL + url } 请求参数 =>`, data || params);
     return config;
 }, (error) => {
     // 对请求错误做些什么
@@ -33,7 +33,7 @@ instance.interceptors.response.use((response) => {
     // 对响应数据做点什么
     let { data: respData, config } = response;
     let { url, baseURL } = config;
-    console.log(`${ url.startsWith('http') ? url : baseURL + url } 请求结果 =>`, respData);
+    console.log(`${ url.startsWith('http') || url.startsWith('//') ? url : baseURL + url } 请求结果 =>`, respData);
     if (!respData) {
         return Promise.reject(`网络繁忙，请稍后再试(1)`);
     }

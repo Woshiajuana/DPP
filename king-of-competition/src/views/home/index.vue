@@ -15,14 +15,19 @@
         </div>
         <div class="popup-rule-wrap" v-if="isRulePopup">
             <div class="popup-rule-inner">
+                <h2>活动规则</h2>
                 <dl>
-                    <dt>6月1日-7月25日</dt>
-                    <dd>首次参与陈列打卡可获得<strong>100积分</strong>，后续每日参与陈列打卡可获得<strong>50积分</strong>，积分可用于抽奖，每日仅可参与1次打卡</dd>
-                </dl>
-                <div class="popup-rule-br"></div>
-                <dl>
-                    <dt>7月25日-7月30日</dt>
-                    <dd>将进行评分结算，积分前<strong>50名</strong>用户可获得荣耀好礼</dd>
+                    <dt>活动时间：</dt>
+                    <dd>2021年06月18日- 2021年8月17日</dd>
+                    <dt>参与方式：</dt>
+                    <dd>用户通过扫描活动二维码，进入活动平台，参与活动获取积分，积分兑换抽奖机会，通过抽奖的方式抽取实物奖品</dd>
+                    <dt>活动内容：</dt>
+                    <dt class="popup-rule-title">荣耀常规赛</dt>
+                    <dd>用户每天可上传一次照片。用户在每个活动周期首次上传照片并审核通过可获得100“嘉油”，后续每天上传照片并审核通过可获得50“嘉油”。“嘉油”可用于抽奖，每次抽奖将消耗500“嘉油”。用户有机会获得小米电动牙刷、小米无线蓝牙耳机、小米登机箱等奖品。用户可在“个人中心”查看剩余可抽奖“嘉油”。</dd>
+                    <dd>每个活动周期用户的“嘉油”将清零。</dd>
+                    <dt class="popup-rule-title">荣耀排位赛</dt>
+                    <dd>后台将对用户在每个周期首次上传的照片质量进行打分，既为王者“嘉油”。每个活动周期的王者排位的“嘉油”为用户在每个活动周期上传照片并审核通过获得的总“嘉油”+王者“嘉油”，抽奖消耗的“嘉油”并不计算在内。</dd>
+                    <dd>每个活动周期结束后，“嘉油”排名前50名可以获得排位赛大奖，奖品为华为手环。</dd>
                 </dl>
                 <i class="popup-rile-close" @click="isRulePopup = false"></i>
             </div>
@@ -146,18 +151,37 @@
         background: url("~src/assets/images/rule-bg-1.png") no-repeat;
         background-size: contain;
         line-height: 1.6;
-        padding-top: j(430);
+        padding-top: j(300);
+        h2{
+            font-size: j(36);
+        }
         dl{
             width: j(525);
-            font-size: j(25);
+            font-size: j(28);
+            height: j(500);
+            overflow-y: auto;
         }
         dt{
             @extend %fwb;
-            @extend %tac;
-            font-size: j(28);
+            margin-top: j(10);
+            font-size: j(30);
+        }
+        dd{
+            margin-top: j(5);
         }
         strong{
             color: #ad956e;
+        }
+        .popup-rule-title{
+            @extend %df;
+            @extend %aic;
+            @extend %jcc;
+            font-size: j(34);
+            margin: j(30) 0 j(20);
+            color: #054fa7;
+            height: j(58);
+            background: url("~src/assets/images/rule-title-bg.png") center no-repeat;
+            background-size: auto 100%;
         }
     }
     .popup-rule-br{
