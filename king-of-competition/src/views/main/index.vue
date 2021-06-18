@@ -26,7 +26,8 @@
         @extend %df;
         @extend %fdc;
         @extend %ma;
-        width: j(750);
+        @extend %w100;
+        max-width: j(750);
     }
     .view-container{
         @extend %df1;

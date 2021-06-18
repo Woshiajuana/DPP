@@ -144,9 +144,11 @@
         @extend %aic;
         @extend %bsb;
         @extend %pr;
+        @extend %w100;
+        @extend %ma;
         color: #b2e5ff;
         font-size: j(23);
-        width: j(750);
+        max-width: j(750);
         height: j(1200);
         background: url("~src/assets/images/rule-bg-1.png") no-repeat;
         background-size: contain;
