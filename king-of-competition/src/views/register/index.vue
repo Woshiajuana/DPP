@@ -70,11 +70,12 @@
                 if (!this.isPrivacy) {
                     return this.$vux.toast.show('请先阅读并勾选用户知情同意书');
                 }
-                const { province, city, ...options } = this.$validate.input(this.objInput);
+                const { province, city, store, ...options } = this.$validate.input(this.objInput);
                 this.$api.doUserRegister({
                     ...options,
                     province: province.name,
                     city: city.name,
+                    store: store.name,
                 }).then(() => {
                     this.$vux.toast.show('注册成功');
                     this.$router.replace('/');

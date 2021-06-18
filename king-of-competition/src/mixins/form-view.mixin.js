@@ -39,6 +39,16 @@ export default {
                 }).toast();
                 return null;
             }
+            if (key === 'store') {
+                this.$api.reqShopList().then(res => {
+                    item.options = res.map(item => {
+                        let { store: value } = item;
+                        return { ...item, value, name: value };
+                    });
+                    item.is = true;
+                }).toast();
+                return null;
+            }
         },
     }
 

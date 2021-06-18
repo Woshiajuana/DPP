@@ -43,3 +43,5 @@ export const doUserAuth = () => {
     window.location.replace(`${baseURL}index.php?r=weixin/authorize&uri=${encodeURIComponent(uri)}`);
 };
 
+// 14. 门店接口
+export const reqShopList = data => curl('index.php?r=v1/storelist', data);

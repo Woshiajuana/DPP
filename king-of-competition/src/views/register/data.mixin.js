@@ -43,6 +43,9 @@ export default {
                 store: {
                     value: '',
                     placeholder: '请填写门店',
+                    is: false,
+                    keyword: '',
+                    options: [],
                     use: [
                         { nonempty: true, prompt: '请填写门店', },
                     ],
