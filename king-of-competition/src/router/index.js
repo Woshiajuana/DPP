@@ -6,6 +6,11 @@ Vue.use(Router);
 const router = new Router({
     routes: [
         {
+            path: '/test',
+            component: () => import('src/views/test'),
+            meta: { status: 1, title: '测试' },
+        },
+        {
             path: '/register',
             component: () => import('src/views/register'),
             meta: { status: 2, title: '注册' },
@@ -83,7 +88,7 @@ router.beforeEach((to, from, next) => {
     } else {
         // url 没有 token 判断是否登录
         const { token } = Vue.prototype.$user.get();
-        if (!token && !['/'].includes(path)) {
+        if (!token && !['/', '/test'].includes(path)) {
             next('/');
         } else {
             next();
