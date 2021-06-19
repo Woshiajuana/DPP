@@ -177,7 +177,7 @@
             @extend %bsb;
             @extend %t0;
             @extend %l50;
-            padding-top: f(120);
+            padding-top: j(60);
             margin-left: -16.7%;
             width: 34.4%;
             height: 50%;
@@ -209,9 +209,11 @@
         }
         span{
             @extend %tac;
-            @extend %twno;
+            @include twno(2);
             margin-top: j(10);
             width: f(150);
+            line-height: j(25);
+            height: j(50);
         }
     }
     .tips{
