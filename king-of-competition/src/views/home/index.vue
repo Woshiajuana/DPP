@@ -151,7 +151,7 @@
         max-width: j(750);
         height: j(1200);
         background: url("~src/assets/images/rule-bg-1.png") no-repeat;
-        background-size: contain;
+        background-size: 100% auto;
         line-height: 1.6;
         padding-top: j(300);
         h2{

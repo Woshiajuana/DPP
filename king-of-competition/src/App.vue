@@ -49,7 +49,7 @@
         max-width: j(750);
         min-height: 100%;
         background: #020617 url("~src/assets/images/bg-1.jpg") center top no-repeat;
-        background-size: j(750) auto;
+        background-size: 100% auto;
     }
 
     .c-button{
