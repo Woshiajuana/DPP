@@ -55,6 +55,18 @@
             DataMixin,
             FormViewMixin,
         ],
+        watch: {
+            'objInput.province.value' () {
+                this.objInput.city.value = '';
+                this.objInput.city.options = [];
+                this.objInput.store.value = '';
+                this.objInput.store.options = [];
+            },
+            'objInput.city.value' () {
+                this.objInput.store.value = '';
+                this.objInput.store.options = [];
+            }
+        },
         methods: {
             handleSmsSend (cb) {
                 if (this.$validate.check({x: this.objInput.mobile})) {

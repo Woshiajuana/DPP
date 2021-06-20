@@ -26,6 +26,12 @@
             DataMixin,
             FormViewMixin,
         ],
+        watch: {
+            'objInput.province.value' () {
+                this.objInput.city.value = '';
+                this.objInput.city.options = [];
+            },
+        },
         methods: {
             handleSmsSend (cb) {
                 if (this.$validate.check({x: this.objInput.mobile})) {
