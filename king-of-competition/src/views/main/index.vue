@@ -37,7 +37,7 @@
     .tab-section{
         @extend %df;
         @extend %aic;
-        height: j(130);
+        height: j(90);
     }
     .tab-item{
         @extend %df1;

@@ -149,5 +149,6 @@
         @extend %df;
         @extend %aic;
         @extend %jcc;
+        padding: 0 j(50);
     }
 </style>

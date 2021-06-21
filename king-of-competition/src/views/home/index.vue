@@ -18,16 +18,16 @@
                 <h2>活动规则</h2>
                 <dl>
                     <dt>活动时间：</dt>
-                    <dd>2021年06月18日- 2021年8月17日</dd>
+                    <dd>2021年7月1日- 2021年8月31日</dd>
                     <dt>参与方式：</dt>
-                    <dd>用户通过扫描活动二维码，进入活动平台，参与活动获取积分，积分兑换抽奖机会，通过抽奖的方式抽取实物奖品</dd>
+                    <dd>用户通过扫描活动二维码，进入活动平台，参与活动获取"嘉油"，通过抽奖的方式抽取礼品</dd>
                     <dt>活动内容：</dt>
                     <dt class="popup-rule-title">荣耀常规赛</dt>
                     <dd>用户每天可上传一次照片。用户在每个活动周期首次上传照片并审核通过可获得100“嘉油”，后续每天上传照片并审核通过可获得50“嘉油”。“嘉油”可用于抽奖，每次抽奖将消耗500“嘉油”。用户有机会获得小米电动牙刷、小米无线蓝牙耳机、小米登机箱等奖品。用户可在“个人中心”查看剩余可抽奖“嘉油”。</dd>
                     <dd>每个活动周期用户的“嘉油”将清零。</dd>
                     <dt class="popup-rule-title">荣耀排位赛</dt>
                     <dd>后台将对用户在每个周期首次上传的照片质量进行打分，既为王者“嘉油”。每个活动周期的王者排位的“嘉油”为用户在每个活动周期上传照片并审核通过获得的总“嘉油”+王者“嘉油”，抽奖消耗的“嘉油”并不计算在内。</dd>
-                    <dd>每个活动周期结束后，“嘉油”排名前50名可以获得排位赛大奖，奖品为华为手环。</dd>
+                    <dd>每个活动周期结束后，“嘉油”排名前30名可以获得排位赛大奖，奖品为华为手环。</dd>
                 </dl>
                 <i class="popup-rile-close" @click="isRulePopup = false"></i>
             </div>
@@ -106,11 +106,11 @@
         @extend %pa;
         @extend %r0;
         top: j(186);
-        width: j(101);
-        height: j(54);
+        width: j(135);
+        height: j(56);
         background: url("~src/assets/images/rule-icon.jpg") no-repeat;
         background-size: contain;
-        border-radius: j(27) 0 0 j(27);
+        border-radius: j(28) 0 0 j(28);
     }
     .play-btn{
         @extend %cp;
@@ -121,12 +121,13 @@
         height: j(55);
     }
     .null-1{
-        height: j(1115);
+        height: j(1050);
     }
     .button-group{
         @extend %df;
         @extend %aic;
         @extend %jcc;
+        padding: 0 j(50);
     }
     .popup-rule-wrap{
         @extend %pf;
