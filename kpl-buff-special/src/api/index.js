@@ -51,7 +51,7 @@ export default {
     doSmsSend: data => curl(`Comm/SendSmsCode`, data),
 
     // 2.15	提交用户位置信息
-    doLocationSubmit: data => curl(`IsOpenLBS/PostUserCoord`, data),
+    doLocationSubmit: data => curl(`Special/PostUserCoord`, data),
 
     // 2.14	获取模板消息ID
     reqTemplateID: data => curl(`Comm/GetTemplateID`, data),

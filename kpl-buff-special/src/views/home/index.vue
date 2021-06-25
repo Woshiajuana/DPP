@@ -131,11 +131,11 @@
                 // 判断活动时间
                 const { ActiveUser, ActiveInfo } = this.objData;
                 const { IsOpenLBS } = ActiveInfo;
-                if (!!IsOpenLBS) {
+                if (!IsOpenLBS) {
                     // 定位关闭了
                     return this.judgeUserStatus(ActiveUser);
                 }
-                this.$wx.getLocation({
+                this.$wx.getLocation1({
                     type: 'gcj02',
                 }).then(res => {
                     const { latitude: Latitude, longitude: Longitude } = res;
@@ -150,7 +150,7 @@
             judgeUserStatus (ActiveUser) {
                 const { ActiveStep } = ActiveUser;
                 // 首页
-                // 活动完成阶段：0扫码，1观看视屏，3调研，4审核通过，5抽奖，6留资/寄送
+                // 活动完成阶段：0扫码，1观看视屏，3调研，6抽奖，7留资/寄送
                 if (ActiveStep === 0) {
                     return this.isVideoPopup = true;
                 } else if (ActiveStep === 1) {
@@ -159,7 +159,7 @@
                 } else if (ActiveStep === 3) {
                     // 完成了调研就去抽奖
                     return this.$router.push('/luck-draw');
-                } else if ([5, 6].includes(ActiveStep)) {
+                } else if ([6, 7].includes(ActiveStep)) {
                     return this.$vux.toast.show('您已参与了本次活动！请查看抽奖记录');
                 } else {
                     return this.$vux.toast.show(`您的活动状态异常，请联系客服(${ActiveStep})`);

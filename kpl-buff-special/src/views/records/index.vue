@@ -9,42 +9,21 @@
                 <div class="record-cell"
                      v-for="(item, index) in pagingData"
                      :key="index">
-                    <div class="record-gift-content" @click="preview = item.Certificate">
-                        <img class="record-gift" :src="item.Certificate"/>
+                    <div class="record-gift-content">
+                        <img class="record-gift" :src="item.ImageUrl || require('src/assets/images/gift-smiling-face.png')"/>
                     </div>
                     <div class="record-info">
                         <span>{{item.Nickname}}</span>
                         <span>{{item.Mobile}}</span>
                         <span>{{item.GiftName}}</span>
-                        <span>{{item.LicenseCar}}</span>
                     </div>
                     <div class="record-status">
                         <span class="record-examine-status" :class="[formatLotteryStatus(item.Status).classes]">{{formatLotteryStatus(item.Status).label}}</span>
-<!--                        <template v-if="computedTime">-->
-                            <div class="c-button c-button-3"
-                                 @click="$router.replace('/questionnaire')"
-                                 v-if="$config.LOTTERY_STATUS.valueByKey.YSHDCJ === item.Status">
-                                <span>前往抽奖</span>
-                            </div>
-                            <div class="c-button c-button-3"
-                                 @click="$router.replace('/work-order')"
-                                 v-else-if="$config.LOTTERY_STATUS.valueByKey.SHBTG === item.Status">
-                                <span>重新提交</span>
-                            </div>
-                            <div class="c-button c-button-3"
-                                 @click="$router.replace({ path: '/receiving', query: item })"
-                                 v-else-if="$config.LOTTERY_STATUS.valueByKey.YCJDLJ === item.Status">
-                                <span>前往领奖</span>
-                            </div>
-<!--                        </template>-->
-                    </div>
-                </div>
-                <div class="record-tips">
-                    <div class="record-tips-title">
-                        <span>注：</span>
-                    </div>
-                    <div class="record-tips-info">
-                        <span>点击图片可查看工单</span>
+                        <div class="c-button c-button-3"
+                             @click="$router.replace({ path: '/receiving', query: item })"
+                             v-if="$config.LOTTERY_STATUS.valueByKey.YCJDLJ === item.Status">
+                            <span>前往领奖</span>
+                        </div>
                     </div>
                 </div>
                 <footer-loading
@@ -78,12 +57,6 @@
             return {
                 preview: '',
             }
-        },
-        computed: {
-            // computedTime () {
-            //     const { EndDate } = this.$route.query;
-            //     return new Date(EndDate.replace(/-/g, '/')).getTime() > Date.now();
-            // }
         },
         created() {
             this.handleRefresh();
@@ -154,6 +127,7 @@
     }
     .record-gift{
         @extend %pr;
+        object-fit: contain;
         width: f(162);
         height: f(162);
     }
