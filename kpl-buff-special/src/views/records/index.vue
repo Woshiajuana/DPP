@@ -20,8 +20,13 @@
                     <div class="record-status">
                         <span class="record-examine-status" :class="[formatLotteryStatus(item.Status).classes]">{{formatLotteryStatus(item.Status).label}}</span>
                         <div class="c-button c-button-3"
+                             v-if="item.LotteryUrl "
+                             @click="handleExchange(item)">
+                            <span>前往领取</span>
+                        </div>
+                        <div class="c-button c-button-3"
                              @click="$router.replace({ path: '/receiving', query: item })"
-                             v-if="$config.LOTTERY_STATUS.valueByKey.YCJDLJ === item.Status">
+                             v-else-if="$config.LOTTERY_STATUS.valueByKey.YCJDLJ === item.Status">
                             <span>前往领奖</span>
                         </div>
                     </div>
@@ -87,6 +92,16 @@
                 if (scrollHeight - scrollTop - height < 300) {
                     this.pagingLoad();
                 }
+            },
+            handleExchange (item) {
+                const { Id: LotteryUserId } = item;
+                this.$api.doExchangeUrl({
+                    LotteryUserId,
+                }).then(res => {
+                    if (res) {
+                        window.location.href = res;
+                    }
+                }).toast();
             },
         },
         components: {

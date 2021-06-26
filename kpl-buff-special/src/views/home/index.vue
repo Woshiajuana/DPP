@@ -75,13 +75,13 @@
                     return null;
                 }
                 let { code, openid, ActiveId } = this.$route.query;
-                if (ActiveId) {
-                    // 链接上有活动ID，直接更新本地
-                    this.$storage.local.set('$$ACTIVE_ID', ActiveId);
-                } else {
-                    // 链接上没有活动id,直接取本地
-                    ActiveId = this.$storage.local.get('$$ACTIVE_ID', '');
-                }
+                // if (ActiveId) {
+                //     // 链接上有活动ID，直接更新本地
+                //     this.$storage.local.set('$$ACTIVE_ID', ActiveId);
+                // } else {
+                //     // 链接上没有活动id,直接取本地
+                //     ActiveId = this.$storage.local.get('$$ACTIVE_ID', '');
+                // }
                 if (!ActiveId) {
                     // 没有活动 id
                     return this.$vux.confirm.show({

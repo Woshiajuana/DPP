@@ -54,6 +54,9 @@ export default {
     doLocationSubmit: data => curl(`Special/PostUserCoord`, data),
 
     // 2.14	获取模板消息ID
-    reqTemplateID: data => curl(`Comm/GetTemplateID`, data),
+    // reqTemplateID: data => curl(`Comm/GetTemplateID`, data),
+
+    // 3.9	获取兑换链接
+    doExchangeUrl: data => curl(`Special/GetLotteryUserUrl`, data),
 
 }
