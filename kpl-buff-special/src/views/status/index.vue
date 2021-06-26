@@ -12,7 +12,7 @@
                     请下次再参与<br/>
                 </p>
             </template>
-            <template v-else-if="$route.query.type === '1'">
+            <template v-else-if="$route.query.type+'' === '1'">
                 <img class="static-icon" src="~src/assets/images/static-icon-1.png">
                 <p class="tips">
                     感谢您参与活动<br/>
@@ -20,7 +20,7 @@
                     安排寄送，请注意查收<br/>
                 </p>
             </template>
-            <template v-else-if="$route.query.type === '2'">
+            <template v-else-if="$route.query.type+'' === '2'">
                 <img class="static-icon" src="~src/assets/images/static-icon-1.png">
                 <p class="tips">
                     感谢您参与活动<br/>

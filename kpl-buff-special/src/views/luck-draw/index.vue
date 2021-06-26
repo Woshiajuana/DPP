@@ -66,7 +66,8 @@
             handleLuckDraw () {
                 if (this.rotate > 360) return null;
                 this.$api.doLuckDrawSubmit().then(res => {
-                    let { GiftId } = res || {};
+                    const { LotteryUser, GiftType, LotteryUrl } = res || {};
+                    let { GiftId } = LotteryUser || {};
                     if (!GiftId) {
                         // 没有中奖
                         const noGifts = this.arrGift.filter(res => res.isNotGift);
@@ -83,9 +84,13 @@
                         this.duration = 0;
                         this.rotate = r;
                         setTimeout(() => {
-                            if (res) {
-                                // 中奖
-                                this.$router.replace({ path: '/receiving', query: res });
+                            if (LotteryUser) {
+                                if (GiftType === 2 && LotteryUrl) {
+                                    window.location.replace(LotteryUrl);
+                                } else {
+                                    // 中奖
+                                    this.$router.replace({ path: '/receiving', query: LotteryUser });
+                                }
                             } else {
                                 // 未中奖
                                 this.$router.replace({ path: '/status', query: { type: 'thanks' }});
