@@ -18,16 +18,16 @@
                         <span>{{item.GiftName}}</span>
                     </div>
                     <div class="record-status">
-                        <div class="c-button c-button-3"
-                             v-if="item.LotteryUrl "
-                             @click="handleExchange(item)">
-                            <span>前往领取</span>
-                        </div>
-                        <template v-else>
-                            <span class="record-examine-status" :class="[formatLotteryStatus(item.Status).classes]">{{formatLotteryStatus(item.Status).label}}</span>
+                        <span class="record-examine-status" :class="[formatLotteryStatus(item.Status).classes]">{{formatLotteryStatus(item.Status).label}}</span>
+                        <template v-if="$config.LOTTERY_STATUS.valueByKey.YCJDLJ === item.Status">
+                            <div class="c-button c-button-3"
+                                 v-if="item.LotteryUrl "
+                                 @click="handleExchange(item)">
+                                <span>前往领取</span>
+                            </div>
                             <div class="c-button c-button-3"
                                  @click="$router.replace({ path: '/receiving', query: item })"
-                                 v-if="$config.LOTTERY_STATUS.valueByKey.YCJDLJ === item.Status">
+                                 v-else>
                                 <span>前往领奖</span>
                             </div>
                         </template>
