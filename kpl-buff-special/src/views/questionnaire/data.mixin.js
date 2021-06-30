@@ -4,27 +4,27 @@ export default {
         return {
             objInput: {
                 Answer1: {
-                    label: '1. 对本次活动评价',
+                    label: '1. 您对本次的活动满意吗？',
                     value: '',
-                    options: ['非常满意', '一般', '满意', '不满意'],
+                    options: ['非常满意', '比较满意', '一般', '不满意'],
                     use: [
-                        { nonempty: true, prompt: '请选择对本次活动评价', },
+                        { nonempty: true, prompt: '请选择您对本次的活动满意吗？', },
                     ],
                 },
                 Answer2: {
-                    label: '2. 对门店人员和服务评价',
+                    label: '2. 您对嘉实多品牌以及嘉实多产品了解吗？',
                     value: '',
-                    options: ['非常满意', '一般', '满意', '不满意'],
+                    options: ['非常了解', '比较了解', '一般了解', '不了解'],
                     use: [
-                        { nonempty: true, prompt: '请选择对门店人员和服务评价', },
+                        { nonempty: true, prompt: '请选择您对嘉实多品牌以及嘉实多产品了解吗？', },
                     ],
                 },
                 Answer3: {
-                    label: '3. 是否愿意再次参加此类活动',
+                    label: '3. 本次活动体验中，您对活动工作人员的服务满意吗？',
                     value: '',
-                    options: ['非常满意', '一般', '满意', '不满意'],
+                    options: ['非常满意', '比较满意', '一般', '不满意'],
                     use: [
-                        { nonempty: true, prompt: '请选择是否愿意再次参加此类活动', },
+                        { nonempty: true, prompt: '请选择本次活动体验中，您对活动工作人员的服务满意吗？', },
                     ],
                 },
                 Answer4: {
