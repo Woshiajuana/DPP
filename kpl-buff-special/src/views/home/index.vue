@@ -63,6 +63,7 @@
         },
         methods: {
             handlePlay () {
+                this.isShowClose = true;
                 this.$refs.video.play();
             },
             doUserAuthOrLogin (fn) {

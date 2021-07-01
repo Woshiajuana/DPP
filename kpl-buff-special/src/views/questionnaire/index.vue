@@ -1,48 +1,77 @@
 <template>
     <div>
-        <div class="view-inner">
+        <super-box
+            @refresh="reqQuestionnaireInfo"
+            :data="superBox$"
+            class="view-inner">
             <div class="null"></div>
             <div class="questionnaire-section c-border">
                 <dl class="questionnaire-cell"
-                    v-for="(item, key) in objInput"
-                    :key="key">
-                    <dt>{{item.label}}</dt>
-                    <template v-if="item.options">
-                        <dd v-for="(option, index) in item.options"
-                            @click="item.value = option"
-                            :class="[item.value === option && 'active']"
+                    :class="['type-' + item.QuestionType]"
+                    v-for="(item, index) in arrData"
+                    :key="index">
+                    <dt>{{index + 1}}. {{item.Name}}</dt>
+                    <template v-if="item.QuestionType === 1">
+                        <dd v-for="(option, index) in item.Answers"
+                            @click="item.value = option.Name"
+                            :class="[item.value === option.Name && 'active']"
                             :key="index">
                             <i></i>
-                            <span>{{option}}</span>
+                            <span>{{option.Name}}</span>
                         </dd>
                     </template>
-                    <dd v-else><textarea v-model="item.value" maxlength="64"></textarea></dd>
+                    <dd v-else><textarea v-model.trim="item.value" maxlength="64"></textarea></dd>
                 </dl>
             </div>
             <div class="c-button c-button-2" @click="handleSubmit">
                 <span>提 交</span>
             </div>
-        </div>
+        </super-box>
     </div>
 </template>
 
 <script>
 
-    import DataMixin from './data.mixin'
+    import SuperBoxMixin from 'src/mixins/super-box.mixin'
 
     export default {
         mixins: [
-            DataMixin,
+            SuperBoxMixin,
         ],
+        data () {
+            return {
+                arrData: [],
+            }
+        },
+        created() {
+            this.reqQuestionnaireInfo();
+        },
         methods: {
+            reqQuestionnaireInfo () {
+                this.superBoxLoading();
+                this.$api.reqQuestionnaireInfo().then(res => {
+                    this.arrData = res.map(item => Object.assign({ value: '' }, item));
+                    this.superBoxSuccess();
+                }).toast(this.superBoxError.bind(this));
+            },
             handleSubmit () {
-                if (this.$validate.check(this.objInput)) {
-                    return null;
+                try {
+                    const options = {};
+                    this.arrData.forEach((item, index) => {
+                        const { Name, value } = item;
+                        const i = index + 1;
+                        if (!value) {
+                            throw `亲~请回答第${i}个问题！`;
+                        }
+                        options[`Question${i}`] = Name;
+                        options[`Answer${i}`] = value;
+                    });
+                    this.$api.doQuestionnaireSubmit(options).then(() => {
+                        this.$router.replace('/luck-draw');
+                    }).toast();
+                } catch (err) {
+                    this.$vux.toast.show(err);
                 }
-                const options = this.$validate.input(this.objInput);
-                this.$api.doQuestionnaireSubmit(options).then(() => {
-                    this.$router.replace('/luck-draw');
-                }).toast();
             },
         },
     }
@@ -80,7 +109,7 @@
         padding: f(40);
         margin: 0 f(20);
         border-bottom: 1px solid #4f84ac;
-        &:last-child{
+        &.type-2{
             border-bottom: none;
             dd{
                 @extend %w100;

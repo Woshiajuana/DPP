@@ -59,4 +59,7 @@ export default {
     // 3.9	获取兑换链接
     doExchangeUrl: data => curl(`Special/GetLotteryUserUrl`, data),
 
+    // 4.4	获取调研题目列表
+    reqQuestionnaireInfo: data => curl(`Research/GetQuestionAnswerList`, data),
+
 }
