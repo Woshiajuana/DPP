@@ -60,6 +60,6 @@ export default {
     doExchangeUrl: data => curl(`Special/GetLotteryUserUrl`, data),
 
     // 4.4	获取调研题目列表
-    reqQuestionnaireInfo: data => curl(`Research/GetQuestionAnswerList`, data),
+    reqQuestionnaireInfo: data => curl(`Research/GetQuestionAnswerList`, data, { loading: false }),
 
 }
