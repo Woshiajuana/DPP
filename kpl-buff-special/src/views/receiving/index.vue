@@ -142,7 +142,8 @@
     .gift-icon{
         @extend %db;
         @extend %ma;
-        width: f(175 * 3);
+        width: auto;
+        max-width: f(175 * 3);
         height: f(125 * 3);
     }
     .agreement{

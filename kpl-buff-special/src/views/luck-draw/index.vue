@@ -13,8 +13,8 @@
                         transition: 'transform ' + duration + 's ease',
                      }">
                     <li v-for="(item, index) in arrGift" :key="index">
-                        <img :src="item.ImageUrl">
                         <span>{{item.GiftName}}</span>
+                        <img :src="item.ImageUrl">
                     </li>
                 </ul>
             </div>
@@ -158,7 +158,7 @@
             height: 50%;
             transform-origin: center bottom;
             font-size: f(29);
-            color: #b9b9b9;
+            color: #666;
             &:nth-child(1){
                 transform: rotate(0deg);
             }
@@ -185,13 +185,14 @@
             }
         }
         img{
-            width: f(175);
-            height: f(125);
+            max-width: f(140);
+            width: auto;
+            height: f(100);
         }
         span{
             @extend %tac;
             @extend %twno;
-            width: f(150);
+            margin-bottom: j(10);
         }
     }
 </style>
