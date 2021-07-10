@@ -18,7 +18,7 @@
                 <h2>活动规则</h2>
                 <dl>
                     <dt>活动时间：</dt>
-                    <dd>2021年7月1日- 2021年8月31日</dd>
+                    <dd>{{ objData.timeBegin | filterDate }} - {{ objData.timeEnd | filterDate }}</dd>
                     <dt>参与方式：</dt>
                     <dd>用户通过扫描活动二维码，进入活动平台，参与活动获取"嘉油"，通过抽奖的方式抽取礼品</dd>
                     <dt>活动内容：</dt>
@@ -42,15 +42,20 @@
 </template>
 
 <script>
+    import FilterMixin from 'src/mixins/filter.mixin'
     export default {
+        mixins: [
+            FilterMixin,
+        ],
         data () {
             return {
                 isRulePopup: false,
                 isVideoPopup: false,
+                objData: '',
             };
         },
         created () {
-            this.doUserAuthOrLogin();
+            this.doUserAuthOrLogin(!window.sessionStorage.getItem('flag'));
         },
         methods: {
             doUserAuthOrLogin (fn) {
@@ -59,11 +64,41 @@
                     this.$api.reqUserInfo({}, {
                         loading: !!fn
                     }).then(res => {
-                        const { mobile } = res || {};
+                        let { mobile, timeBegin, timeEnd, ...options } = res || {};
+                        timeBegin = +`${timeBegin}000`;
+                        timeEnd = +`${timeEnd}000`;
+                        this.objData = Object.assign({
+                            mobile,
+                            timeBegin,
+                            timeEnd,
+                        }, options);
                         if (!mobile) {
                             return this.$router.replace('/register');
                         }
-                        fn && this[fn](res);
+                        if (fn) {
+                            const curTime = Date.now();
+                            let content = '';
+                            if (curTime > timeEnd) {
+                                content = '活动已结束';
+                            }
+                            if (curTime < timeBegin) {
+                                content = '活动尚未开始'
+                            }
+                            if (content) {
+                                this.$vux.confirm.show({
+                                    title: '温馨提示',
+                                    content,
+                                    showCancelButton: false,
+                                    showConfirmButton: true,
+                                    confirmText: '我知道了',
+                                    onConfirm: () => {
+                                        window.sessionStorage.setItem('flag', 'true');
+                                    },
+                                });
+                                return;
+                            }
+                            typeof fn === 'string' && this[fn](res);
+                        }
                     }).toast();
                     return null;
                 }
