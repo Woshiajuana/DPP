@@ -50,6 +50,7 @@
                 }
                 const { head } = this.$route.query;
                 const { base64 } = this.objImage;
+                const { store = '' } = this.$user.get()
                 this.$vux.loading.show();
                 this.$helper.loadAllImages([
                     require('src/assets/images/poster-bg.jpg'),
@@ -99,7 +100,7 @@
                     ctx.textAlign = 'center';
                     ctx.font = "14px '字体','字体','微软雅黑','宋体'"; // 设置字体
                     ctx.textBaseline = 'hanging'; // 在绘制文本时使用的当前文本基线
-                    ctx.fillText(`欢迎莅临XXX门店`, 750 * 0.5 * rpx, 1280 * rpx); // 设置文本内容
+                    ctx.fillText(`欢迎莅临${store}门店`, 750 * 0.5 * rpx, 1280 * rpx); // 设置文本内容
                     ctx.fillText(`嘉实多极护等你助力`, 750 * 0.5 * rpx, 1325 * rpx); // 设置文本内容
                     ctx.restore();
 

@@ -72,6 +72,7 @@
                             timeBegin,
                             timeEnd,
                         }, options);
+                        this.$user.update(this.objData);
                         if (!mobile) {
                             return this.$router.replace('/register');
                         }
