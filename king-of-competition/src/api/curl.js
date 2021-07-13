@@ -7,7 +7,7 @@ export const baseURL =
     window.location.host.indexOf('192') > -1
     || window.location.host.indexOf('localhost') > -1
         ? '//chainstore.g2campaign.com/'
-        : '//chainstore.g2campaign.com/';
+        : '/';
 
 const instance = axios.create({
     baseURL,
