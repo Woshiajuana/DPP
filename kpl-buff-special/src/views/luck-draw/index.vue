@@ -9,7 +9,7 @@
             <div class="turntable-wrap">
                 <ul class="turntable-inner"
                     :style="{
-                        transform: 'rotate(-' + rotate + 'deg)',
+                        transform: 'rotate(' + computedRotate + 'deg)',
                         transition: 'transform ' + duration + 's ease',
                      }">
                     <li v-for="(item, index) in arrGift" :key="index">
@@ -35,6 +35,11 @@
             DataMixin,
             SuperBoxMixin,
         ],
+        computed: {
+            computedRotate () {
+                return -this.rotate;
+            }
+        },
         created () {
             this.reqLuckDrawInfo();
         },
